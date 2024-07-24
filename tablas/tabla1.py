@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from PIL import Image,ImageTk
+from agregar import *
 
 
 ventana=tk.Tk()
@@ -141,8 +142,6 @@ frame_acciones=tk.Frame(ventana,width=795,height=60,bg="#fff")
 frame_acciones.pack(side="bottom")
 frame_acciones.pack_propagate(False)
 
-boton_nuevo=tk.Button(frame_acciones,text="Nuevo",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid")#1751ED
-boton_nuevo.place(relx=0.17,rely=0.5,anchor="center")
 
 boton_modificar=tk.Button(frame_acciones,text="Modificar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid")
 boton_modificar.place(relx=0.39,rely=0.5,anchor="center")
@@ -165,37 +164,39 @@ style = ttk.Style()
 style.configure("Custom.Treeview", borderwidth=0, relief="flat")
 style.configure("Custom.Treeview.Heading", borderwidth=0, relief="flat")
 
-tree=ttk.Treeview(ventana)
-tree.pack(fill="both",side="right")
+arbol=ttk.Treeview(ventana)
+arbol.pack(fill="both",side="right")
 
-tree["columns"]=["Año","Nombre","Apellido","Ingreso","DNI","Obs"]
+arbol["columns"]=["Año","Nombre","Apellido","Ingreso","DNI","Obs"]
 
-tree.column('#0', width=0, stretch=tk.NO)
-tree.column('Año', anchor=tk.CENTER, width=85)
-tree.column('Nombre', anchor=tk.CENTER, width=140)
-tree.column('Apellido', anchor=tk.CENTER, width=140)
-tree.column('Ingreso', anchor=tk.CENTER, width=115)
-tree.column('DNI', anchor=tk.CENTER, width=115)
-tree.column('Obs', anchor=tk.CENTER, width=210)
+arbol.column('#0', width=0, stretch=tk.NO)
+arbol.column('Año', anchor=tk.CENTER, width=85)
+arbol.column('Nombre', anchor=tk.CENTER, width=140)
+arbol.column('Apellido', anchor=tk.CENTER, width=140)
+arbol.column('Ingreso', anchor=tk.CENTER, width=115)
+arbol.column('DNI', anchor=tk.CENTER, width=115)
+arbol.column('Obs', anchor=tk.CENTER, width=210)
 
-tree.heading("#0",text="",anchor=tk.CENTER)
-tree.heading("Año",text="Curso:",anchor=tk.CENTER)
-tree.heading("Nombre",text="Nombre/s",anchor=tk.CENTER)
-tree.heading("Apellido",text="Apellido/s",anchor=tk.CENTER)
-tree.heading("Ingreso",text="F.Ingreso",anchor=tk.CENTER)
-tree.heading("DNI",text="DNI",anchor=tk.CENTER)
-tree.heading("Obs",text="Observaciones",anchor=tk.CENTER)
+arbol.heading("#0",text="",anchor=tk.CENTER)
+arbol.heading("Año",text="Curso:",anchor=tk.CENTER)
+arbol.heading("Nombre",text="Nombre/s",anchor=tk.CENTER)
+arbol.heading("Apellido",text="Apellido/s",anchor=tk.CENTER)
+arbol.heading("Ingreso",text="F.Ingreso",anchor=tk.CENTER)
+arbol.heading("DNI",text="DNI",anchor=tk.CENTER)
+arbol.heading("Obs",text="Observaciones",anchor=tk.CENTER)
 
-tree.insert(parent='', index='end', id=0, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
-tree.insert(parent='', index='end', id=1, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
-tree.insert(parent='', index='end', id=2, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
-tree.insert(parent='', index='end', id=3, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
-tree.insert(parent='', index='end', id=4, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
-tree.insert(parent='', index='end', id=5, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
-tree.insert(parent='', index='end', id=6, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
-tree.insert(parent='', index='end', id=7, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
-tree.insert(parent='', index='end', id=8, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
+arbol.insert(parent='', index='end', id=0, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
+arbol.insert(parent='', index='end', id=1, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
+arbol.insert(parent='', index='end', id=2, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
+arbol.insert(parent='', index='end', id=3, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
+arbol.insert(parent='', index='end', id=4, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
+arbol.insert(parent='', index='end', id=5, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
+arbol.insert(parent='', index='end', id=6, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
+arbol.insert(parent='', index='end', id=7, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
+arbol.insert(parent='', index='end', id=8, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
 
+boton_nuevo=tk.Button(frame_acciones,text="Nuevo",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda: crear_agregar(ventana,arbol))#1751ED
+boton_nuevo.place(relx=0.17,rely=0.5,anchor="center")
 
 
 ventana.mainloop()

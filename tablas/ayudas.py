@@ -1,6 +1,8 @@
 import tkinter as tk
 from PIL import Image,ImageTk
 
+#----------------------------------------------------------------------------#
+
 
 def crear_entry_con_img(new_frame,i,ubicacionx,ubicaciony,texto,ubi1,ubi2,textvar,ubirelx,ubirely,relwidth,validate_cmd,only_numbers=False):
     img = imagen(i)#num_img
@@ -43,6 +45,10 @@ def solo_numeros(char):
 #La función solo_numeros sirve para comprobar si un carácter dado es un dígito. Es útil cuando quieres asegurarte de que sólo se permiten números en un Entry de Tkinter.
 #si es un numero devuelve true sino devuelve false
 
+
+def actualizar_textvar(event, textarea, textvar):
+    textvar.set(textarea.get("1.0", tk.END))
+
 def crear_textarea_con_img(new_frame, i, ubicacionx, ubicaciony, texto, ubi1, ubi2, textvar, ubirelx, ubirely, relwidth, altura):
     img = imagen(i)  # num_img
     label_img = tk.Label(new_frame, image=img, bg="#fff")
@@ -55,7 +61,7 @@ def crear_textarea_con_img(new_frame, i, ubicacionx, ubicaciony, texto, ubi1, ub
     textarea = tk.Text(new_frame, font=("Times", 14), fg="#222", bg="#fff", bd=1, relief=tk.SOLID, height=altura)
     textarea.place(relx=ubirelx, rely=ubirely, relwidth=relwidth)  # ubirelx, ubirely, relwidth
     
-    if textvar:
-        textarea.insert(tk.END, textvar.get())
+    textarea.bind("<KeyRelease>", lambda event: actualizar_textvar(event, textarea, textvar))
 
-    return textarea
+
+#----------------------------------------------------------------------------#
