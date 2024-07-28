@@ -1,20 +1,10 @@
 import tkinter as tk
 from ayudas import *
+from bd import crear_conexion,ejecutar_datos
 
-def crear_agregar(root,tree):#6 entrys y el arbol, es para que al presionar el boton de Ingresar Estudiante obtenga los valores y los inserte(el boton esta al final del codigo)
-    def obtener_valores(var_entry1,var_entry2,var_entry3,var_entry4,var_entry5,var_entry6,tree,top):
-        valor_entry1 = var_entry1.get()#Curso
-        valor_entry2 = var_entry2.get()#Nombre
-        valor_entry3 = var_entry3.get()#Apellido
-        valor_entry4 = var_entry4.get()#F.Ingreso
-        valor_entry5 = var_entry5.get()#DNI
-        valor_entry6 = var_entry6.get()#Observaciones
-        
-        valores=(valor_entry1,valor_entry2,valor_entry3,valor_entry4,valor_entry5,valor_entry6)
-        tree.insert("",tk.END,values=valores)
-        
-        top.destroy()
-        
+def crear_agregar(root,tree,):#6 entrys y el arbol, es para que al presionar el boton de Ingresar Estudiante obtenga los valores y los inserte(el boton esta al final del codigo)
+    #falta conseguir los valores y que se inseerten
+    # Cerrar la ventana secundaria anterior si existe
     var_entry1=tk.StringVar()#Curso
     var_entry2=tk.StringVar()#Nombre/s
     var_entry3=tk.StringVar()#Apellido/s
@@ -22,12 +12,28 @@ def crear_agregar(root,tree):#6 entrys y el arbol, es para que al presionar el b
     var_entry5=tk.StringVar()#DNI
     var_entry6=tk.StringVar()#Observaciones
     
-    
+    def obtener_valores(var1,var2,var3,var4,var5,var6):
+        vare1=var1.get()
+        vare2=var2.get()
+        vare3=var3.get()
+        vare4=var4.get()
+        vare5=var5.get()
+        vare6=var6.get()
+        valoress=[vare1,vare2,vare3,vare4,vare5,vare6] 
+        conexion=crear_conexion()
+        insertar=f"insert into estudiantes (curso,nombres,apellidos,fecha_ingreso,dni,observaciones)values('{valoress[0]}','{valoress[1]}','{valoress[2]}','{valoress[3]}',{valoress[4]},'{valoress[5]}');"
+        ejecutar_datos(conexion,insertar)
+        conexion.close()
+        top.destroy()
+        
+        
+
     #creamos la ventana toplevel para que si se cierra la principal tmb se cierre
     top=tk.Toplevel(root)
     top.title("Agregar un estudiante")
     top.config(bg="#fff")
     top.geometry("460x610")
+    # top.protocol("WM_DELETE_WINDOW", lambda: None)
     
     #creamos el frame donde va estar el titulo de "Ingresar Estudiante"
     frame_superior=tk.Frame(top,width=460,height=90,bg="#fff")###medidas exactas
@@ -82,7 +88,7 @@ def crear_agregar(root,tree):#6 entrys y el arbol, es para que al presionar el b
     
     #-----------------------------------------------#
     #boton de ingresar, que va insertar en la tabla al ser presionado por eso el lambda
-    boton_ingresar=tk.Button(top,text="Ingresar Estudiante",bg="#3C5BBA",fg="#fff",font=("Helvetica",18,"bold"),pady=2,bd=2,relief="flat",activebackground="#fff",activeforeground="#3C5BBA", overrelief="solid",command=lambda:obtener_valores(var_entry1,var_entry2,var_entry3,var_entry4,var_entry5,var_entry6,tree,top))
+    boton_ingresar=tk.Button(top,text="Ingresar Estudiante",bg="#3C5BBA",fg="#fff",font=("Helvetica",18,"bold"),pady=2,bd=2,relief="flat",activebackground="#fff",activeforeground="#3C5BBA", overrelief="solid",command=lambda:obtener_valores(var_entry1,var_entry2,var_entry3,var_entry4,var_entry5,var_entry6))
     boton_ingresar.place(relx=0.5,rely=0.93,anchor="center",relwidth=0.97)
     
     top.mainloop()

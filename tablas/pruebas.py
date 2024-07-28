@@ -1,99 +1,55 @@
 import tkinter as tk
-from PIL import Image, ImageTk
 
-def crear_frame_auxiliar(master, altura):
-    frame_auxiliar = tk.Frame(master, bg="#f0f0f0", width=460, height=altura)
-    frame_auxiliar.pack(side=tk.TOP, fill="x")
-    frame_auxiliar.pack_propagate(False)
-    return frame_auxiliar
+class App:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Ejemplo de Entry con Imagen")
 
-def leer_imagen(ruta, tamaño):
-    return ImageTk.PhotoImage(Image.open(ruta).resize(tamaño, Image.LANCZOS))
+        self.entries = []  # Lista para almacenar referencias a los Entry widgets
+        validate_cmd = self.root.register(self.validate_numbers)
 
-def imagen(i):
-    camino_imagen = [
-        "tablas/imagenes_tabla/Curso.png",
-        "tablas/imagenes_tabla/nombre.png",
-        "tablas/imagenes_tabla/apellido.png",
-        "tablas/imagenes_tabla/dni3.png",
-        "tablas/imagenes_tabla/f.ingreso.png",
-        "tablas/imagenes_tabla/observacion.png",
-    ]
-    img = leer_imagen(camino_imagen[i], (20, 20))
-    return img
+        # Crear un Frame como contenedor
+        self.frame = tk.Frame(root, bg="#fff")
+        self.frame.pack(fill=tk.BOTH, expand=True)
 
-def crear_agregar(root):
-    def obtener_valores():
-        valor_entry1 = var_entry1.get()
-        valor_entry2 = var_entry2.get()
-        valor_entry3 = var_entry3.get()
-        valor_entry4 = var_entry4.get()
-        valor_entry5 = var_entry5.get()
-        valor_entry6 = var_entry6.get()
-        print(valor_entry1, valor_entry2, valor_entry3, valor_entry4, valor_entry5, valor_entry6)
-    
-    def solo_numeros(char):
-        return char.isdigit()
-    
-    var_entry1 = tk.StringVar()  # Curso
-    var_entry2 = tk.StringVar()  # Nombre/s
-    var_entry3 = tk.StringVar()  # Apellido/s
-    var_entry4 = tk.StringVar()  # F.Ingreso
-    var_entry5 = tk.StringVar()  # DNI
-    var_entry6 = tk.StringVar()  # Observaciones
-    
-    top = tk.Toplevel(root)
-    top.title("Agregar un estudiante")
-    top.geometry("460x600")
-    
-    frame_superior = tk.Frame(top, width=460, height=110, bg="#fff")
-    frame_superior.pack(side="top")
-    frame_superior.pack_propagate(False)
-    
-    titulo = tk.Label(frame_superior, text="Ingresar Estudiante", font=("Times", 39, "italic bold"), bg="#fff", fg="#3C5BBA")
-    titulo.place(relx=0.5, rely=0.45, anchor="center")
-    
-    frame_inferior = tk.Frame(top, width=460, height=490, bg="#fff", bd=1, relief="solid")
-    frame_inferior.pack(side="top")
-    
-    validate_cmd = top.register(solo_numeros)
-    
-    def crear_entry_con_img(new_frame, i, ubicacionx, ubicaciony, texto, ubi1, ubi2, textvar, ubirelx, ubirely, relwidth, only_numbers=False):
-        img = imagen(i)
-        label_img = tk.Label(new_frame, image=img, bg="#f0f0f0")
-        label_img.image = img  # Guardar referencia para evitar que la imagen sea recolectada por el garbage collector
+        # Crear varios Entry widgets con imágenes
+        self.crear_entry_con_img(self.frame, "imagen_path", 0.1, 0.1, "Texto 1", 0.1, 0.15, tk.StringVar(), 0.2, 0.15, 0.3, validate_cmd, only_numbers=True)
+        self.crear_entry_con_img(self.frame, "imagen_path", 0.1, 0.3, "Texto 2", 0.1, 0.35, tk.StringVar(), 0.2, 0.35, 0.3, validate_cmd, only_numbers=False)
+
+        # Botón para imprimir los valores de los Entry widgets
+        print_button = tk.Button(self.frame, text="Imprimir Valores", command=self.print_entry_values)
+        print_button.place(relx=0.1, rely=0.5)
+
+    def crear_entry_con_img(self, new_frame, i, ubicacionx, ubicaciony, texto, ubi1, ubi2, textvar, ubirelx, ubirely, relwidth, validate_cmd, only_numbers=False):
+        img = self.imagen(i)  # Función para obtener la imagen
+        label_img = tk.Label(new_frame, image=img, bg="#fff")
+        label_img.image = img  # Mantener la referencia de la imagen
         label_img.place(relx=ubicacionx, rely=ubicaciony)
-        
-        label1 = tk.Label(new_frame, text=texto, font=("Times", 12), fg="#666a88", bg="#f0f0f0")
+
+        label1 = tk.Label(new_frame, text=texto, font=("Times", 14), fg="#666a88", bg="#fff")
         label1.place(relx=ubi1, rely=ubi2)
-        
+
         if only_numbers:
-            entry1 = tk.Entry(new_frame, textvariable=textvar, font=("Times", 11), fg="#222", bg="#fff", bd=1, relief=tk.SOLID, validate="key", validatecommand=(validate_cmd, '%S'))
+            entry1 = tk.Entry(new_frame, textvariable=textvar, font=("Times", 13), fg="#222", bg="#fff", bd=1, relief=tk.SOLID, validate="key", validatecommand=(validate_cmd, '%S'))
         else:
-            entry1 = tk.Entry(new_frame, textvariable=textvar, font=("Times", 11), fg="#222", bg="#fff", bd=1, relief=tk.SOLID)
-        
+            entry1 = tk.Entry(new_frame, textvariable=textvar, font=("Times", 13), fg="#222", bg="#fff", bd=1, relief=tk.SOLID)
         entry1.place(relx=ubirelx, rely=ubirely, relwidth=relwidth)
-        
-    new_frame = crear_frame_auxiliar(frame_inferior, 50)
-    crear_entry_con_img(new_frame, 0, 0.1, 0.0, "Curso", 0.06, 0.0, var_entry1, 0.02, 0.5, 0.95)
-    new_frame = crear_frame_auxiliar(frame_inferior, 50)
-    crear_entry_con_img(new_frame, 1, 0.1, 0.0, "Nombre/s", 0.06, 0.0, var_entry2, 0.02, 0.5, 0.95)
-    new_frame = crear_frame_auxiliar(frame_inferior, 50)
-    crear_entry_con_img(new_frame, 2, 0.1, 0.0, "Apellido/s", 0.06, 0.0, var_entry3, 0.02, 0.5, 0.95)
-    new_frame = crear_frame_auxiliar(frame_inferior, 50)
-    crear_entry_con_img(new_frame, 3, 0.1, 0.0, "F. Ingreso", 0.06, 0.0, var_entry4, 0.02, 0.5, 0.95, only_numbers=True)
-    new_frame = crear_frame_auxiliar(frame_inferior, 50)
-    crear_entry_con_img(new_frame, 4, 0.1, 0.0, "DNI", 0.06, 0.0, var_entry5, 0.02, 0.5, 0.95, only_numbers=True)
-    new_frame = crear_frame_auxiliar(frame_inferior, 50)
-    crear_entry_con_img(new_frame, 5, 0.1, 0.0, "Observaciones", 0.06, 0.0, var_entry6, 0.02, 0.5, 0.95)
 
-    boton_guardar = tk.Button(frame_inferior, text="Guardar", command=obtener_valores)
-    boton_guardar.place(relx=0.5, rely=0.9, anchor="center")
-    
-    top.mainloop()
-    
-ventana = tk.Tk()
-ventana.geometry("500x500")
+        self.entries.append(entry1)  # Agregar el Entry a la lista de entries
 
-crear_agregar(ventana)
-ventana.mainloop()
+    def imagen(self, path):
+        # Aquí deberías cargar y devolver la imagen a partir del path
+        # Por ahora, solo devolvemos un placeholder
+        return tk.PhotoImage(file=path)
+
+    def validate_numbers(self, char):
+        return char.isdigit()
+
+    def print_entry_values(self):
+        for entry in self.entries:
+            print(entry.get())
+
+# Configuración de la ventana principal
+root = tk.Tk()
+app = App(root)
+root.mainloop()

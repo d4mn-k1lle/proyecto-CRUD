@@ -1,7 +1,25 @@
 import tkinter as tk
+#arbol
 from tkinter import ttk
+from bd import mostrar_tabla,crear_conexion
+#logo
 from PIL import Image,ImageTk
-from agregar import *
+#boton agregar y modificar
+from agregar import crear_agregar
+from modificar import crear_modificar
+
+def tablita(conexion,curso):
+    consulta=f"select * from estudiantes where curso='{curso}';"
+    data=mostrar_tabla(conexion,consulta)
+    
+    for item in arboledo.get_children():
+        arboledo.delete(item)
+    
+    for row in data:
+        arboledo.insert("", "end", values=row)
+        
+    conexion.close()
+    
 
 #creamos la ventana principal
 ventana=tk.Tk()
@@ -13,9 +31,11 @@ def show_frame(frame):
     frame.tkraise()
     
 #esto dsp va hacer que al ejecutar un boton de los de arriba no solo modifique el titulo sino tambien la tabla para que muestre solo lo de ese curso
-def DosEnUno(label,texto):
+def DosEnUno(label,texto,curso):
+    conexion=crear_conexion()
     label.config(text=texto)
-
+    tablita(conexion,curso)
+    
 #funcion para crear los botones de la izquierda,(el estado es para que el boton de "superior no se pueda presionar ni interactue(deshabilitado)")
 def crear_boton_izq(frame,texto,relx,rely,estado,pady):
     boton=tk.Button(frame,text=texto,font=("Times",14,"bold"),width=10,height=1,bg="#fff",fg="#111",borderwidth=2,relief="flat",activebackground="#fff",activeforeground="#111", overrelief="solid",state=estado,disabledforeground="#111",pady=pady)
@@ -127,28 +147,28 @@ for frame in (frame_botones_sup,frame_botones_sup2,frame_botones_sup3):
 #---------------#
 
 #creamos los botones con las funciones del principio y con el lambda hacemos que solo se ejecuten si se presiona el boton
-boton_1a=crear_boton_curso(frame_botones_sup,"1ºA",0.08,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 1ºA"))
-boton_1b=crear_boton_curso(frame_botones_sup,"1ºB",0.22,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 1ºB"))
-boton_1c=crear_boton_curso(frame_botones_sup,"1ºC",0.36,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 1ºC"))
-boton_1d=crear_boton_curso(frame_botones_sup,"1ºD",0.50,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 1ºD"))
-boton_2a=crear_boton_curso(frame_botones_sup,"2ºA",0.64,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 2ºA"))
-boton_2b=crear_boton_curso(frame_botones_sup,"2ºB",0.78,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 2ºB"))
+boton_1a=crear_boton_curso(frame_botones_sup,"1ºA",0.08,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 1ºA","1a"))
+boton_1b=crear_boton_curso(frame_botones_sup,"1ºB",0.22,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 1ºB","1b"))
+boton_1c=crear_boton_curso(frame_botones_sup,"1ºC",0.36,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 1ºC","1c"))
+boton_1d=crear_boton_curso(frame_botones_sup,"1ºD",0.50,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 1ºD","1d"))
+boton_2a=crear_boton_curso(frame_botones_sup,"2ºA",0.64,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 2ºA","2a"))
+boton_2b=crear_boton_curso(frame_botones_sup,"2ºB",0.78,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 2ºB","2b"))
 boton_siguiente_2=crear_boton_cambio(frame_botones_sup,"-->",0.92,0.5,frame_botones_sup2)
 #fin del primer frame
 #---------------#
 #inicio del segundo
 boton_volver_1=crear_boton_cambio(frame_botones_sup2,"<--",0.08,0.5,frame_botones_sup)
-boton_2c=crear_boton_curso(frame_botones_sup2,"2ºC",0.22,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 2ºC"))
-boton_2d=crear_boton_curso(frame_botones_sup2,"2ºD",0.36,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 2ºD"))
-boton_3a=crear_boton_curso(frame_botones_sup2,"3ºA",0.50,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 3ºA"))
-boton_3b=crear_boton_curso(frame_botones_sup2,"3ºB",0.64,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 3ºB"))
-boton_3c=crear_boton_curso(frame_botones_sup2,"3ºC",0.78,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 3ºC"))
+boton_2c=crear_boton_curso(frame_botones_sup2,"2ºC",0.22,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 2ºC","2c"))
+boton_2d=crear_boton_curso(frame_botones_sup2,"2ºD",0.36,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 2ºD","2d"))
+boton_3a=crear_boton_curso(frame_botones_sup2,"3ºA",0.50,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 3ºA","3a"))
+boton_3b=crear_boton_curso(frame_botones_sup2,"3ºB",0.64,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 3ºB","3b"))
+boton_3c=crear_boton_curso(frame_botones_sup2,"3ºC",0.78,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 3ºC","3c"))
 boton_siguiente_3=crear_boton_cambio(frame_botones_sup2,"-->",0.92,0.5,frame_botones_sup3)
 #fin del segundo frame
 #---------------#
 #inicio del tercero, en un futuro se pueden crear muchos mas frames, es facil
 boton_volver_2=crear_boton_cambio(frame_botones_sup3,"<--",0.08,0.5,frame_botones_sup2)
-boton_3d=crear_boton_curso(frame_botones_sup3,"3ºD",0.22,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 3ºD"))
+boton_3d=crear_boton_curso(frame_botones_sup3,"3ºD",0.22,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 3ºD","3d"))
 #fin del tercero
 
 #---------------#
@@ -160,10 +180,6 @@ frame_acciones.pack_propagate(False)
 
 #---------------#
 
-#creamos los 4 botones , falta optimizarlo como una funcion que haga de plantilla, en realidad dsp hay que moverlos a que esten dsp de la tabla
-boton_modificar=tk.Button(frame_acciones,text="Modificar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid")
-boton_modificar.place(relx=0.39,rely=0.5,anchor="center")
-
 boton_eliminar=tk.Button(frame_acciones,text="Eliminar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid")
 boton_eliminar.place(relx=0.61,rely=0.5,anchor="center")
 
@@ -173,44 +189,43 @@ boton_guardar.place(relx=0.83,rely=0.5,anchor="center")
 #---------------#
 
 #el nombre arbol es para que no de error al ponerle tree que es el mismo nombre que un parametro
-arbol=ttk.Treeview(ventana)
-arbol.pack(fill="both",side="right")
+arboledo=ttk.Treeview(ventana)
+arboledo.pack(fill="both",side="right")
 
 #definimos como vamos a acceder a las columnas 
-arbol["columns"]=["Año","Nombre","Apellido","Ingreso","DNI","Obs"]
+arboledo["columns"]=["Año","Nombre","Apellido","Ingreso","DNI","Obs"]
 
 #las creamos, la columna "#0" sinceramente no se para que sirve chat gpt me dijo que era necesaria
-arbol.column('#0', width=0, stretch=tk.NO)
-arbol.column('Año', anchor=tk.CENTER, width=85)
-arbol.column('Nombre', anchor=tk.CENTER, width=140)
-arbol.column('Apellido', anchor=tk.CENTER, width=140)
-arbol.column('Ingreso', anchor=tk.CENTER, width=115)
-arbol.column('DNI', anchor=tk.CENTER, width=115)
-arbol.column('Obs', anchor=tk.CENTER, width=210)
+arboledo.column('#0', width=0, stretch=tk.NO)
+arboledo.column('Año', anchor=tk.CENTER, width=85)
+arboledo.column('Nombre', anchor=tk.CENTER, width=140)
+arboledo.column('Apellido', anchor=tk.CENTER, width=140)
+arboledo.column('Ingreso', anchor=tk.CENTER, width=115)
+arboledo.column('DNI', anchor=tk.CENTER, width=115)
+arboledo.column('Obs', anchor=tk.CENTER, width=210)
 #---------------#
 #les ponemos nombre a las columnas y donde se va ubicar el texto de cada cabecera
-arbol.heading("#0",text="",anchor=tk.CENTER)
-arbol.heading("Año",text="Curso:",anchor=tk.CENTER)
-arbol.heading("Nombre",text="Nombre/s",anchor=tk.CENTER)
-arbol.heading("Apellido",text="Apellido/s",anchor=tk.CENTER)
-arbol.heading("Ingreso",text="F.Ingreso",anchor=tk.CENTER)
-arbol.heading("DNI",text="DNI",anchor=tk.CENTER)
-arbol.heading("Obs",text="Observaciones",anchor=tk.CENTER)
+arboledo.heading("#0",text="",anchor=tk.CENTER)
+arboledo.heading("Año",text="Curso:",anchor=tk.CENTER)
+arboledo.heading("Nombre",text="Nombre/s",anchor=tk.CENTER)
+arboledo.heading("Apellido",text="Apellido/s",anchor=tk.CENTER)
+arboledo.heading("Ingreso",text="F.Ingreso",anchor=tk.CENTER)
+arboledo.heading("DNI",text="DNI",anchor=tk.CENTER)
+arboledo.heading("Obs",text="Observaciones",anchor=tk.CENTER)
 #---------------#
 #esto es provisional para saber cuanto ocupa y como queda con algunos datos
-arbol.insert(parent='', index='end', id=0, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
-arbol.insert(parent='', index='end', id=1, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
-arbol.insert(parent='', index='end', id=2, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
-arbol.insert(parent='', index='end', id=3, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
-arbol.insert(parent='', index='end', id=4, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
-arbol.insert(parent='', index='end', id=5, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
-arbol.insert(parent='', index='end', id=6, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
-arbol.insert(parent='', index='end', id=7, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
-arbol.insert(parent='', index='end', id=8, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
+arboledo.insert(parent='', index='end', id=0, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
+arboledo.insert(parent='', index='end', id=1, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
 
-#el boton de crear esta dsp, pq sino no me toma el arbol ya que sino no existiria, en resumen, los 4 botones deben ir dsp del arbol
-boton_nuevo=tk.Button(frame_acciones,text="Nuevo",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda: crear_agregar(ventana,arbol))#1751ED
+    
+#el boton de crear esta dsp, pq sino no me toma el arboledo ya que sino no existiria, en resumen, los 4 botones deben ir dsp del arboledo
+boton_nuevo=tk.Button(frame_acciones,text="Nuevo",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_agregar(ventana,arboledo))#1751ED
 boton_nuevo.place(relx=0.17,rely=0.5,anchor="center")
+
+boton_modificar=tk.Button(frame_acciones,text="Modificar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_modificar(ventana,arboledo))
+boton_modificar.place(relx=0.39,rely=0.5,anchor="center")
+
+
 
 #mostramos la ventana
 ventana.mainloop()
