@@ -17,11 +17,16 @@ def crear_modificar(root,tree):
         vare4=var4.get()
         vare5=var5.get()
         vare6=var6.get()
-        valoress=[vare1,vare2,vare3,vare4,vare5,vare6] 
+        if vare6=="":
+            seleccionado = tree.selection()
+            valores = tree.item(seleccionado, 'values')
+            valor_definitivo=valores[5]
+            vare6=valor_definitivo
         conexion=crear_conexion()
-        insertar=f"UPDATE estudiantes SET curso='{valoress[0]}',nombres='{valoress[1]}', apellidos='{valoress[2]}',fecha_ingreso='{valoress[3]}',dni={valoress[4]},observaciones='{valoress[5]}' where dni={valoress[4]};"
+        valoress=[vare1,vare2,vare3,vare4,vare5,vare6]
+        insertar=f"UPDATE estudiantes SET curso='{valoress[0]}',nombres='{valoress[1]}', apellidos='{valoress[2]}',fecha_ingreso={valoress[3]},dni={valoress[4]},observaciones='{valoress[5]}' where dni={valoress[4]};"
         ejecutar_datos(conexion,insertar)
-        conexion.close()
+        conexion.close() 
         top.destroy()
     
     def extraer_numeros_de_fecha(fecha):
@@ -59,7 +64,7 @@ def crear_modificar(root,tree):
         return entrada.isdigit()
     
     def actualizar_textvar(event, textarea, textvar):#el event tiene que estar si o si aunque te marque que no se esta usando
-        textvar.set(textarea.get("1.0", tk.END).strip())
+        textvar.set(textarea.get("0.0", tk.END).strip())
     
     def valor_textarea(treeview, textarea, posicion):
         try:
@@ -73,7 +78,7 @@ def crear_modificar(root,tree):
 
             # Obtener el valor de la posición especificada
             valor_definitivo = valores[posicion]
-            textarea.delete('1.0', tk.END)  # Limpiar el contenido del Text
+            textarea.delete('0.0', tk.END)  # Limpiar el contenido del Text
             textarea.insert('0.0', valor_definitivo)  # Insertar el valor en el Text
         # except ValueError as ve:
         #     messagebox.showerror("Error", str(ve))
