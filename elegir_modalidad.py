@@ -19,11 +19,11 @@ def pantalla_principal():
 
     #-- creamos el titulo EESTN1 y lo ubicamos dentro del frame--#
     titulo=tk.Label(frame_titulo,text="EESTNº1",bg="#3C5BBA",font=("Cambria",50,"bold"),fg="#041C65")
-    titulo.place(relx=0.012,rely=0.01)
+    titulo.place(relx=0.17,rely=0.012,)
 
     #-- creamos el subtitulo detallanod cada una de las letras de eestn1  y lo ubicamos en el frame--#
     subtitulo=tk.Label(frame_titulo,text="Escuela Tecnica Manuel Belgrano Nro1",bg="#3C5BBA",font=("Cambria",14,"bold"),fg="#041C65")
-    subtitulo.place(relx=0.02,rely=0.65)
+    subtitulo.place(relx=0.119,rely=0.65)
 
 
     #--#--#--#
@@ -58,8 +58,20 @@ def pantalla_principal():
     frame_botones.pack_propagate(False)
 
     #-- creamos un label para que no quede tan vacio arriba en este mismo frame --#
-    titulo_elegir=tk.Label(frame_botones,text="Porfavor, elija la opcion deseada:",bg="#C6CFE9",font=("Book Antiqua",22,"bold"),fg="#222")
-    titulo_elegir.place(relx=0.02,rely=0.04)
+    titulo_elegir=tk.Label(frame_botones,text="Por favor, elija la opción deseada:",bg="#C6CFE9",font=("Book Antiqua",22,"bold"),fg="#222")
+    titulo_elegir.place(relx=0.04,rely=0.04)
+    
+    #-- Se crea el label del curso y año  
+    CursoProgramacion = tk.Label(ventana,
+                text = "5*3 Progracion 2024",
+                fg="#1d1d1d",
+                bg="#B5BED6",
+                font=("Times",14,"italic bold"),
+                width=15,
+                height=2)
+    CursoProgramacion.place(relx=0.75, rely=0.906)
+    
+    
 
     #-- creamos el boton de ciclo basico --#
     boton_basico=tk.Button(frame_botones,text="Basico",font=("Times",14,"bold"),width=15,height=2,bg="#fff",fg="#111",borderwidth=2,relief="flat",activebackground="#fff",activeforeground="#111", overrelief="solid")
