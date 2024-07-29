@@ -30,6 +30,8 @@ def crear_agregar(root,tree,):#6 entrys y el arbol, es para que al presionar el 
 
     #creamos la ventana toplevel para que si se cierra la principal tmb se cierre
     top=tk.Toplevel(root)
+    top.grab_set()
+    top.resizable(False,False)
     top.title("Agregar un estudiante")
     top.config(bg="#fff")
     top.geometry("460x610")

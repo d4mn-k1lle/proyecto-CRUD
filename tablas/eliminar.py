@@ -4,11 +4,10 @@ from bd import crear_conexion,ejecutar_datos
 from tkinter import messagebox
 
 
-def crear_modificar(root,tree):
+def crear_eliminar(root,tree):
     top=tk.Toplevel(root)
     top.grab_set()
     top.resizable(False,False)
-    
     
     def obtener_valores(var1,var2,var3,var4,var5,var6):
         vare1=var1.get()
@@ -19,7 +18,7 @@ def crear_modificar(root,tree):
         vare6=var6.get()
         valoress=[vare1,vare2,vare3,vare4,vare5,vare6] 
         conexion=crear_conexion()
-        insertar=f"UPDATE estudiantes SET curso='{valoress[0]}',nombres='{valoress[1]}', apellidos='{valoress[2]}',fecha_ingreso='{valoress[3]}',dni={valoress[4]},observaciones='{valoress[5]}' where dni={valoress[4]};"
+        insertar=f"DELETE FROM estudiantes WHERE dni = {valoress[4]};"
         ejecutar_datos(conexion,insertar)
         conexion.close()
         top.destroy()
@@ -36,11 +35,11 @@ def crear_modificar(root,tree):
             seleccionado = treeview.selection()
             if not seleccionado:
                 print("No hay selección")
-                
 
             valores = treeview.item(seleccionado, 'values')
             if len(valores) <= posicion:
-                raise ValueError(f"La fila seleccionada no tiene al menos {posicion + 1} valores")
+                print("error")
+                
 
             # Extraer números del valor de la posición especificada
             valor = valores[posicion]
@@ -48,12 +47,11 @@ def crear_modificar(root,tree):
             entry.delete(0, tk.END)  # Limpiar el contenido del Entry
             entry.insert(0, valor_numeros)  # Insertar los números en el Entry
         # except ValueError as ve:
-            # messagebox.showerror("Error", str(ve))
+        #     messagebox.showerror("Error", str(ve))
         # except Exception as e:
-            # messagebox.showerror("Error", f"Error inesperado: {str(e)}")
+        #     messagebox.showerror("Error", f"Error inesperado: {str(e)}")
         except:
-            print("Error")
-    
+            print("error")
     def validar_entrada(entrada):
     # Permitir solo dígitos
         return entrada.isdigit()
@@ -80,13 +78,12 @@ def crear_modificar(root,tree):
         # except Exception as e:
         #     messagebox.showerror("Error", f"Error inesperado: {str(e)}")
         except:
-            print("Error")
+            print("error")
             top.destroy()
     def valor_entry(treeview, entry, posicion):
         try:
             seleccionado = treeview.selection()
             if not seleccionado:
-                # raise ValueError("No hay selección")
                 print("No hay selección")
 
             valores = treeview.item(seleccionado, 'values')
@@ -103,8 +100,7 @@ def crear_modificar(root,tree):
         # except Exception as e:
         #     messagebox.showerror("Error", f"Error inesperado: {str(e)}")
         except:
-            print("Error")
-    
+            print("error")
     var_entry1=tk.StringVar()
     var_entry2=tk.StringVar()
     var_entry3=tk.StringVar()
@@ -122,7 +118,7 @@ def crear_modificar(root,tree):
     frame_superior.pack(side="top")
     frame_superior.pack_propagate(False)
     
-    titulo=tk.Label(frame_superior,text="Modificar Estudiante",font=("Times",39,"italic bold"),bg="#fff",fg="#3C5BBA")
+    titulo=tk.Label(frame_superior,text="Borrar Estudiante",font=("Times",39,"italic bold"),bg="#fff",fg="#3C5BBA")
     titulo.place(relx=0.5,rely=0.45,anchor="center")
     
     frame_inferior=tk.Frame(top,width=460,height=490,bg="#fff",)###medidas exactas
@@ -213,7 +209,7 @@ def crear_modificar(root,tree):
     
     textarea.bind("<KeyRelease>", lambda event: actualizar_textvar(event, textarea, var_entry6))
     
-    boton_ingresar=tk.Button(top,text="Ingresar Estudiante",bg="#3C5BBA",fg="#fff",font=("Helvetica",18,"bold"),pady=2,bd=2,relief="flat",activebackground="#fff",activeforeground="#3C5BBA", overrelief="solid",command=lambda:obtener_valores(var_entry1,var_entry2,var_entry3,var_entry4,var_entry5,var_entry6))
+    boton_ingresar=tk.Button(top,text="Borrar Estudiante",bg="#3C5BBA",fg="#fff",font=("Helvetica",18,"bold"),pady=2,bd=2,relief="flat",activebackground="#fff",activeforeground="#3C5BBA", overrelief="solid",command=lambda:obtener_valores(var_entry1,var_entry2,var_entry3,var_entry4,var_entry5,var_entry6))
     boton_ingresar.place(relx=0.5,rely=0.95,anchor="center",relwidth=0.97)
     
     valor_textarea(tree,textarea,5)

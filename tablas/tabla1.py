@@ -2,11 +2,11 @@ import tkinter as tk
 #arbol
 from tkinter import ttk
 from bd import mostrar_tabla,crear_conexion
-#logo
 from PIL import Image,ImageTk
 #boton agregar y modificar
 from agregar import crear_agregar
 from modificar import crear_modificar
+from eliminar import crear_eliminar
 
 def tablita(conexion,curso):
     consulta=f"select * from estudiantes where curso='{curso}';"
@@ -25,7 +25,7 @@ def tablita(conexion,curso):
 ventana=tk.Tk()
 ventana.title("Ventana Principal")
 ventana.geometry("960x560")
-
+ventana.resizable(False,False)
 #es obligatoria ya que hace que se pueda superponer un frame sobre otro(botones de arriba 1a,1b,1c cunado pasas pagina se cambia a otro frame y asi la cantidad necesaria)
 def show_frame(frame):
     frame.tkraise()
@@ -180,9 +180,6 @@ frame_acciones.pack_propagate(False)
 
 #---------------#
 
-boton_eliminar=tk.Button(frame_acciones,text="Eliminar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid")
-boton_eliminar.place(relx=0.61,rely=0.5,anchor="center")
-
 boton_guardar=tk.Button(frame_acciones,text="Guardar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid")
 boton_guardar.place(relx=0.83,rely=0.5,anchor="center")
 
@@ -224,6 +221,9 @@ boton_nuevo.place(relx=0.17,rely=0.5,anchor="center")
 
 boton_modificar=tk.Button(frame_acciones,text="Modificar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_modificar(ventana,arboledo))
 boton_modificar.place(relx=0.39,rely=0.5,anchor="center")
+
+boton_eliminar=tk.Button(frame_acciones,text="Eliminar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_eliminar(ventana,arboledo))
+boton_eliminar.place(relx=0.61,rely=0.5,anchor="center")
 
 
 

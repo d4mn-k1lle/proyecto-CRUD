@@ -55,7 +55,7 @@ def modificar_entry_con_img(x,new_frame,i,ubicacionx,ubicaciony,texto,ubi1,ubi2,
     
         
 #para los inputs crea un frame, para que luego podamos poner la img y el label al lado y el input abajo
-def crear_frame_auxiliar( master, altura):#master es dentro de donde se va ubicar
+def crear_frame_auxiliar(master, altura):#master es dentro de donde se va ubicar
     frame_auxiliar = tk.Frame(master, bg="#fff", width=460, height=altura)
     frame_auxiliar.pack(side=tk.TOP, fill="x")
     frame_auxiliar.pack_propagate(False)
