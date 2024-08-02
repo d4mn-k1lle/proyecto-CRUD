@@ -1,5 +1,6 @@
 import tkinter as tk
 from PIL import Image,ImageTk
+import subprocess
 
 #--------------------parte de agregar(por el momento solo agregar)------------------------#
 
@@ -89,3 +90,10 @@ def crear_textarea_con_img(new_frame, i, ubicacionx, ubicaciony, texto, ubi1, ub
 
 
 #-------------------------------fin de agregar---------------------------------------------#
+
+def abrir_archivo(root,ruta_archivo):
+    try:
+        subprocess.Popen(["python", ruta_archivo])
+        root.destroy()  # Cierra la ventana actual
+    except:
+        print("error")

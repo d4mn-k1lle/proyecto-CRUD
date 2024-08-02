@@ -35,3 +35,5 @@ def mostrar_tabla(connection,query):
     cursor.execute(query)
     rows = cursor.fetchall()
     return rows
+
+

@@ -21,7 +21,7 @@ def crear_agregar(root,tree,):#6 entrys y el arbol, es para que al presionar el 
         vare6=var6.get()
         valoress=[vare1,vare2,vare3,vare4,vare5,vare6] 
         conexion=crear_conexion()
-        insertar=f"insert into estudiantes (curso,nombres,apellidos,fecha_ingreso,dni,observaciones)values('{valoress[0]}','{valoress[1]}','{valoress[2]}',{valoress[3]},{valoress[4]},'{valoress[5]}');"
+        insertar=f"insert into estudiantes (curso,nombres,apellidos,fecha_ingreso,dni,observaciones)values('{valoress[0]}','{valoress[1]}','{valoress[2]}','{valoress[3]}',{valoress[4]},'{valoress[5]}');"
         ejecutar_datos(conexion,insertar)
         conexion.close()
         top.destroy()

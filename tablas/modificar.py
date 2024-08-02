@@ -24,7 +24,7 @@ def crear_modificar(root,tree):
             vare6=valor_definitivo
         conexion=crear_conexion()
         valoress=[vare1,vare2,vare3,vare4,vare5,vare6]
-        insertar=f"UPDATE estudiantes SET curso='{valoress[0]}',nombres='{valoress[1]}', apellidos='{valoress[2]}',fecha_ingreso={valoress[3]},dni={valoress[4]},observaciones='{valoress[5]}' where dni={valoress[4]};"
+        insertar=f"UPDATE estudiantes SET curso='{valoress[0]}',nombres='{valoress[1]}', apellidos='{valoress[2]}',fecha_ingreso='{valoress[3]}',dni={valoress[4]},observaciones='{valoress[5]}' where dni={valoress[4]};"
         ejecutar_datos(conexion,insertar)
         conexion.close() 
         top.destroy()
@@ -218,7 +218,7 @@ def crear_modificar(root,tree):
     
     textarea.bind("<KeyRelease>", lambda event: actualizar_textvar(event, textarea, var_entry6))
     
-    boton_ingresar=tk.Button(top,text="Ingresar Estudiante",bg="#3C5BBA",fg="#fff",font=("Helvetica",18,"bold"),pady=2,bd=2,relief="flat",activebackground="#fff",activeforeground="#3C5BBA", overrelief="solid",command=lambda:obtener_valores(var_entry1,var_entry2,var_entry3,var_entry4,var_entry5,var_entry6))
+    boton_ingresar=tk.Button(top,text="Modificar Estudiante",bg="#3C5BBA",fg="#fff",font=("Helvetica",18,"bold"),pady=2,bd=2,relief="flat",activebackground="#fff",activeforeground="#3C5BBA", overrelief="solid",command=lambda:obtener_valores(var_entry1,var_entry2,var_entry3,var_entry4,var_entry5,var_entry6))
     boton_ingresar.place(relx=0.5,rely=0.95,anchor="center",relwidth=0.97)
     
     valor_textarea(tree,textarea,5)
