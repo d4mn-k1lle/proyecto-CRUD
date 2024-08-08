@@ -1,8 +1,9 @@
 import tkinter as tk
 from ayudas import *
 from bd import crear_conexion,ejecutar_datos
+from tkinter import messagebox
 
-def crear_agregar(root,tree,):#6 entrys y el arbol, es para que al presionar el boton de Ingresar Estudiante obtenga los valores y los inserte(el boton esta al final del codigo)
+def crear_agregar(root,tree,lista_permitidos):#6 entrys y el arbol, es para que al presionar el boton de Ingresar Estudiante obtenga los valores y los inserte(el boton esta al final del codigo)
     #falta conseguir los valores y que se inseerten
     # Cerrar la ventana secundaria anterior si existe
     var_entry1=tk.StringVar()#Curso
@@ -19,20 +20,23 @@ def crear_agregar(root,tree,):#6 entrys y el arbol, es para que al presionar el 
         vare4=var4.get()
         vare5=var5.get()
         vare6=var6.get()
-        valoress=[vare1,vare2,vare3,vare4,vare5,vare6] 
-        conexion=crear_conexion()
-        insertar=f"insert into estudiantes (curso,nombres,apellidos,fecha_ingreso,dni,observaciones)values('{valoress[0]}','{valoress[1]}','{valoress[2]}','{valoress[3]}',{valoress[4]},'{valoress[5]}');"
-        ejecutar_datos(conexion,insertar)
-        conexion.close()
-        top.destroy()
-        
+        valor_1=vare1.capitalize()
+        if valor_1 in lista_permitidos:
+            conexion=crear_conexion()
+            valoress=[vare1,vare2,vare3,vare4,vare5,vare6] 
+            insertar=f"insert into estudiantes (curso,nombres,apellidos,fecha_ingreso,dni,observaciones)values('{valoress[0]}','{valoress[1]}','{valoress[2]}','{valoress[3]}',{valoress[4]},'{valoress[5]}');"
+            ejecutar_datos(conexion,insertar)
+            conexion.close()
+            top.destroy()
+        else:
+            messagebox.showerror("Error","el primer dato es invalido")
         
 
     #creamos la ventana toplevel para que si se cierra la principal tmb se cierre
     top=tk.Toplevel(root)
     top.grab_set()
     top.resizable(False,False)
-    top.title("Agregar un estudiante")
+    top.title("Agregar estudiante")
     top.config(bg="#fff")
     top.geometry("460x610")
     # top.protocol("WM_DELETE_WINDOW", lambda: None)

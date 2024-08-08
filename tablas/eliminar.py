@@ -10,19 +10,28 @@ def crear_eliminar(root,tree):
     top.resizable(False,False)
     
     def obtener_valores(var1,var2,var3,var4,var5,var6):
-        vare1=var1.get()
-        vare2=var2.get()
-        vare3=var3.get()
-        vare4=var4.get()
-        vare5=var5.get()
-        vare6=var6.get()
-        valoress=[vare1,vare2,vare3,vare4,vare5,vare6] 
-        conexion=crear_conexion()
-        insertar=f"DELETE FROM estudiantes WHERE dni = {valoress[4]};"
-        ejecutar_datos(conexion,insertar)
-        conexion.close()
-        top.destroy()
-    
+        confirmacion=messagebox.askquestion("Confirmar","¿Esta seguro de borrar a este estudiante?")
+        if confirmacion=='yes':
+            vare1=var1.get()#curso
+            vare2=var2.get()#nombre
+            vare3=var3.get()#apellido
+            vare4=var4.get()#f.ingreso
+            vare5=var5.get()#dni
+            vare6=var6.get()#obs
+            prueba=tree.selection()
+            valor_dni=tree.item(prueba,"values")
+            if vare5 in valor_dni[4]:
+                valoress=[vare1,vare2,vare3,vare4,vare5,vare6] 
+                conexion=crear_conexion()
+                insertar=f"DELETE FROM estudiantes WHERE dni = {valoress[4]};"
+                ejecutar_datos(conexion,insertar)
+                conexion.close()
+                top.destroy()
+            else:
+                messagebox.showerror("Error","El dni no es el seleccionado anteriormente")
+        else:
+            return
+        
     def extraer_numeros_de_fecha(fecha):
         numeros = [int(c) for c in fecha if c.isdigit()]
         return numeros
@@ -110,7 +119,7 @@ def crear_eliminar(root,tree):
     
     
     
-    top.title("Agregar un estudiante")
+    top.title("Eliminar estudiante")
     top.config(bg="#fff")
     top.geometry("460x610")
     

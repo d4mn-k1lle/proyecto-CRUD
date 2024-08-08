@@ -79,15 +79,17 @@ def main_login():
         cnx = conectar_bd()
         if cnx:
             # Verificar credenciales
-            if obtener_valores(cnx, var_entry1, var_entry2):
+            if obtener_valores(cnx, var_entry1, var_entry2)==True:
                 messagebox.showinfo("Éxito", "Login exitoso")
+                fm_i.abrir_archivo_panelcontrol()
+                ventana.destroy()
                 # Aquí puedes agregar la lógica para abrir una nueva ventana o realizar otras acciones después del login exitoso
             else:
                 messagebox.showerror("Error", "Credenciales incorrectas")
             cnx.close()  # Cerrar conexión después de usarla
     
     #-- botton de iniciar sesion y su ubicacion en la ventana --#
-    boton1=tk.Button(frame_SurEste,text="Iniciar sesion",font=("Helvetica",15,"bold"),bg="#0B4EBD",bd=0,fg="#fafafa",width=80,height=1,command=registro)
+    boton1=tk.Button(frame_SurEste,text="Iniciar sesion",font=("Helvetica",15,"bold"),bg="#0B4EBD",bd=0,fg="#fafafa",width=80,height=1,command=lambda:registro())
     boton1.pack(padx=16,pady=28)
 
 

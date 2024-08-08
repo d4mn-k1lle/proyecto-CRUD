@@ -26,7 +26,7 @@ def tablita(conexion,curso):
 
 #creamos la ventana principal
 ventana=tk.Tk()
-ventana.title("Ventana Principal")
+ventana.title("Tabla Ciclo Basico")
 ventana.geometry("960x560")
 ventana.resizable(False,False)
 #es obligatoria ya que hace que se pueda superponer un frame sobre otro(botones de arriba 1a,1b,1c cunado pasas pagina se cambia a otro frame y asi la cantidad necesaria)
@@ -217,12 +217,14 @@ arboledo.heading("Obs",text="Observaciones",anchor=tk.CENTER)
 arboledo.insert(parent='', index='end', id=0, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
 arboledo.insert(parent='', index='end', id=1, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
 
+#lista de valores permitidos para esta tabla
+lista_verificacion=["1a","1b","1c","1d","2a","2b","2c","2d","3a","3b","3c","3d"]
     
 #el boton de crear esta dsp, pq sino no me toma el arboledo ya que sino no existiria, en resumen, los 4 botones deben ir dsp del arboledo
-boton_nuevo=tk.Button(frame_acciones,text="Agregar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_agregar(ventana,arboledo))#1751ED
+boton_nuevo=tk.Button(frame_acciones,text="Agregar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_agregar(ventana,arboledo,lista_verificacion))#1751ED
 boton_nuevo.place(relx=0.17,rely=0.5,anchor="center")
 
-boton_modificar=tk.Button(frame_acciones,text="Modificar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_modificar(ventana,arboledo))
+boton_modificar=tk.Button(frame_acciones,text="Modificar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_modificar(ventana,arboledo,lista_verificacion))
 boton_modificar.place(relx=0.39,rely=0.5,anchor="center")
 
 boton_eliminar=tk.Button(frame_acciones,text="Eliminar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_eliminar(ventana,arboledo))

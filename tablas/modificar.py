@@ -4,7 +4,13 @@ from bd import crear_conexion,ejecutar_datos
 from tkinter import messagebox
 
 
-def crear_modificar(root,tree):
+def verificar_valor_en_lista(valor, lista):
+    if valor in lista:
+        print("Hola")
+    else:
+        print("Mal hecho")
+        
+def crear_modificar(root,tree,lista_permitidos):
     top=tk.Toplevel(root)
     top.grab_set()
     top.resizable(False,False)
@@ -22,12 +28,16 @@ def crear_modificar(root,tree):
             valores = tree.item(seleccionado, 'values')
             valor_definitivo=valores[5]
             vare6=valor_definitivo
-        conexion=crear_conexion()
-        valoress=[vare1,vare2,vare3,vare4,vare5,vare6]
-        insertar=f"UPDATE estudiantes SET curso='{valoress[0]}',nombres='{valoress[1]}', apellidos='{valoress[2]}',fecha_ingreso='{valoress[3]}',dni={valoress[4]},observaciones='{valoress[5]}' where dni={valoress[4]};"
-        ejecutar_datos(conexion,insertar)
-        conexion.close() 
-        top.destroy()
+        valor_1=vare1.capitalize()
+        if valor_1 in lista_permitidos:
+            conexion=crear_conexion()
+            valoress=[valor_1,vare2,vare3,vare4,vare5,vare6]
+            insertar=f"UPDATE estudiantes SET curso='{valoress[0]}',nombres='{valoress[1]}', apellidos='{valoress[2]}',fecha_ingreso='{valoress[3]}',dni={valoress[4]},observaciones='{valoress[5]}' where dni={valoress[4]};"
+            ejecutar_datos(conexion,insertar)
+            conexion.close() 
+            top.destroy()
+        else:
+            messagebox.showerror("Error","el primer dato es invalido")
     
     def extraer_numeros_de_fecha(fecha):
         numeros = [int(c) for c in fecha if c.isdigit()]
@@ -119,7 +129,7 @@ def crear_modificar(root,tree):
     
     
     
-    top.title("Agregar un estudiante")
+    top.title("Modicar estudiante")
     top.config(bg="#fff")
     top.geometry("460x610")
     
@@ -200,7 +210,7 @@ def crear_modificar(root,tree):
 
     label5=tk.Label(new_frame5,text="DNI:",font=("Times",14),fg="#666a88",bg="#fff")
     label5.place(relx=0.065,rely=0.0)
-    entry5 = tk.Entry(new_frame5, textvariable=var_entry5, font=("Times", 13), fg="#222", bg="#fff", bd=1, relief=tk.SOLID,)
+    entry5 = tk.Entry(new_frame5, textvariable=var_entry5, font=("Times", 13), fg="#222", bg="#fff", bd=1, relief=tk.SOLID,validate="key", validatecommand=(validar_cmd, '%P'))
     entry5.place(relx=0.015, rely=0.5, relwidth=0.95)
     valor_entry(tree,entry5,4)
 

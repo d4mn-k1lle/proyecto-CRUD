@@ -49,6 +49,15 @@ class frames_imagenes:
             messagebox.showerror("Error", f"No se pudo encontrar el archivo: {ruta_archivo}")
         except Exception as e:
             messagebox.showerror("Error", f"Error al abrir el archivo: {e}")
+    
+    def abrir_archivo_panelcontrol(self):
+        ruta_archivo = "tablas/elegir_modalidad.py"
+        try:
+            subprocess.Popen(["python", ruta_archivo])
+        except FileNotFoundError as e:
+            messagebox.showerror("Error", f"No se pudo encontrar el archivo: {ruta_archivo}")
+        except Exception as e:
+            messagebox.showerror("Error", f"Error al abrir el archivo: {e}")
             
     #destruye/cierra la ventana en la que estamos
     def cerrar_ventana(self):

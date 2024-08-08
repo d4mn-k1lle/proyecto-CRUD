@@ -25,7 +25,7 @@ def tablita(conexion,curso):
 
 #creamos la ventana principal
 ventana=tk.Tk()
-ventana.title("Ventana Principal")
+ventana.title("Tabla de Programacion")
 ventana.geometry("960x560")
 ventana.resizable(False,False)
 #es obligatoria ya que hace que se pueda superponer un frame sobre otro(botones de arriba 1a,1b,1c cunado pasas pagina se cambia a otro frame y asi la cantidad necesaria)
@@ -149,12 +149,12 @@ for frame in (frame_botones_sup,frame_botones_sup2,frame_botones_sup3):
 #---------------#
 
 #creamos los botones con las funciones del principio y con el lambda hacemos que solo se ejecuten si se presiona el boton
-boton_1a=crear_boton_curso(frame_botones_sup,"4º2",0.08,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 4º2","4-2"))#################################### me falta hacer que funcione
-boton_1b=crear_boton_curso(frame_botones_sup,"4º5",0.22,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 4º5","4-5"))
-boton_1c=crear_boton_curso(frame_botones_sup,"5º2",0.36,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 5º2","5-2"))
-boton_1d=crear_boton_curso(frame_botones_sup,"5º3",0.50,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 5º3","5-3"))
-boton_2a=crear_boton_curso(frame_botones_sup,"6º2",0.64,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 6º2","6-2"))
-boton_2b=crear_boton_curso(frame_botones_sup,"6º5",0.78,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 6º5","6-5"))
+boton_4_2=crear_boton_curso(frame_botones_sup,"4º2",0.08,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 4º2","4-2"))#################################### me falta hacer que funcione
+boton_4_5=crear_boton_curso(frame_botones_sup,"4º5",0.22,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 4º5","4-5"))
+boton_5_2=crear_boton_curso(frame_botones_sup,"5º2",0.36,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 5º2","5-2"))
+boton_5_3=crear_boton_curso(frame_botones_sup,"5º3",0.50,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 5º3","5-3"))
+boton_6_2=crear_boton_curso(frame_botones_sup,"6º2",0.64,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 6º2","6-2"))
+boton_6_5=crear_boton_curso(frame_botones_sup,"6º5",0.78,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 6º5","6-5"))
 # boton_siguiente_2=crear_boton_cambio(frame_botones_sup,"-->",0.92,0.5,frame_botones_sup2)
 #fin del primer frame
 #---------------#
@@ -216,12 +216,15 @@ arboledo.heading("Obs",text="Observaciones",anchor=tk.CENTER)
 arboledo.insert(parent='', index='end', id=0, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
 arboledo.insert(parent='', index='end', id=1, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
 
-    
+
+#lista de valores permitidos para esta tabla
+lista_verificacion=["4-2","4-5","5-2","5-3","6-2","6-5","7-4"]
+
 #el boton de crear esta dsp, pq sino no me toma el arboledo ya que sino no existiria, en resumen, los 4 botones deben ir dsp del arboledo
-boton_nuevo=tk.Button(frame_acciones,text="agregar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_agregar(ventana,arboledo))#1751ED
+boton_nuevo=tk.Button(frame_acciones,text="agregar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_agregar(ventana,arboledo,lista_verificacion))#1751ED
 boton_nuevo.place(relx=0.17,rely=0.5,anchor="center")
 
-boton_modificar=tk.Button(frame_acciones,text="Modificar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_modificar(ventana,arboledo))
+boton_modificar=tk.Button(frame_acciones,text="Modificar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_modificar(ventana,arboledo,lista_verificacion))
 boton_modificar.place(relx=0.39,rely=0.5,anchor="center")
 
 boton_eliminar=tk.Button(frame_acciones,text="Eliminar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_eliminar(ventana,arboledo))

@@ -25,7 +25,7 @@ def tablita(conexion,curso):
 
 #creamos la ventana principal
 ventana=tk.Tk()
-ventana.title("Ventana Principal")
+ventana.title("Tabla de Maestro Mayor en Obras")
 ventana.geometry("960x560")
 ventana.resizable(False,False)
 #es obligatoria ya que hace que se pueda superponer un frame sobre otro(botones de arriba 1a,1b,1c cunado pasas pagina se cambia a otro frame y asi la cantidad necesaria)
@@ -150,7 +150,7 @@ for frame in (frame_botones_sup,frame_botones_sup2,frame_botones_sup3):
 
 #creamos los botones con las funciones del principio y con el lambda hacemos que solo se ejecuten si se presiona el boton
 boton_4_4=crear_boton_curso(frame_botones_sup,"4º4",0.08,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 4º4","4-4"))#################################### me falta hacer que funcione
-boton_4_6=crear_boton_curso(frame_botones_sup,"4º5",0.22,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 4º6","4-6"))
+boton_4_6=crear_boton_curso(frame_botones_sup,"4º6",0.22,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 4º6","4-6"))
 boton_5_4=crear_boton_curso(frame_botones_sup,"5º4",0.36,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 5º4","5-4"))
 boton_5_5=crear_boton_curso(frame_botones_sup,"5º5",0.50,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 5º5","5-5"))
 boton_6_3=crear_boton_curso(frame_botones_sup,"6º3",0.64,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 6º3","6-3"))
@@ -216,12 +216,15 @@ arboledo.heading("Obs",text="Observaciones",anchor=tk.CENTER)
 arboledo.insert(parent='', index='end', id=0, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
 arboledo.insert(parent='', index='end', id=1, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
 
+
+#lista de valores permitidos para esta tabla
+lista_verificacion=["4-4","4-6","5-4","5-5","6-3","6-4","7-3"]
     
 #el boton de crear esta dsp, pq sino no me toma el arboledo ya que sino no existiria, en resumen, los 4 botones deben ir dsp del arboledo
-boton_nuevo=tk.Button(frame_acciones,text="agregar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_agregar(ventana,arboledo))#1751ED
+boton_nuevo=tk.Button(frame_acciones,text="agregar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_agregar(ventana,arboledo,lista_verificacion))#1751ED
 boton_nuevo.place(relx=0.17,rely=0.5,anchor="center")
 
-boton_modificar=tk.Button(frame_acciones,text="Modificar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_modificar(ventana,arboledo))
+boton_modificar=tk.Button(frame_acciones,text="Modificar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_modificar(ventana,arboledo,lista_verificacion))
 boton_modificar.place(relx=0.39,rely=0.5,anchor="center")
 
 boton_eliminar=tk.Button(frame_acciones,text="Eliminar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_eliminar(ventana,arboledo))
