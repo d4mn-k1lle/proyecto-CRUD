@@ -39,10 +39,16 @@ def obtener_valores(var_entry1, var_entry2, var_entry3, var_entry4, var_entry5, 
     valor_entry6 = var_entry6.get()  # Conf contraseña
     valor_entry7 = var_entry7.get()  # Email
 
-    # Verificar si alguno de los campos está vacío
-    if any(v == "" for v in [valor_entry1, valor_entry2, valor_entry3, valor_entry5, valor_entry7]):
-        messagebox.showerror("ERROR", "Hay campos sin completar")
-        return
+    if not valor_entry1:
+        messagebox.showerror("ERROR", "El campo 'Nombre' está vacío.")
+    if not valor_entry2:
+        messagebox.showerror("ERROR", "El campo 'Apellido' está vacío.")
+    if not valor_entry3:
+        messagebox.showerror("ERROR", "El campo 'Usuario' está vacío.")
+    if not valor_entry5:
+        messagebox.showerror("ERROR", "El campo 'Contraseña' está vacío.")
+    if not valor_entry7:
+        messagebox.showerror("ERROR", "El campo 'Email' está vacío.")
 
     # Verificar formato del email (endswith Sirve para comprobar si una cadena termina con un texto específico, en este caso dominios_permitidos )
     dominios_permitidos = ["gmail.com", ".gob.ar"]
@@ -50,16 +56,21 @@ def obtener_valores(var_entry1, var_entry2, var_entry3, var_entry4, var_entry5, 
         messagebox.showerror("ERROR", "El gmail es invalido.")
         return
 
-    # Verificar si los campos coinciden y si el email es válido
-    if (valor_entry3 == valor_entry4 and valor_entry5 == valor_entry6):
-        if verificar_usuario_existente(cnx, valor_entry3):
-            messagebox.showerror("Error", f"El usuario '{valor_entry3}' ya existe")
-        else:
-            insert_data(cnx, valor_entry1, valor_entry2, valor_entry4, valor_entry5, valor_entry7)
-            messagebox.showinfo("Aviso", "Los datos han sido guardados exitosamente")
-            llamar_2()
+    # Verifica si las confirmaciones estan correctas != compara entre una y otra, si no son iguales, manda error.
+    if valor_entry3 != valor_entry4:
+        messagebox.showerror("ERROR", "El usuario no coincide con el que proporcionaste.")
+        return
+    if valor_entry5 != valor_entry6:
+        messagebox.showerror("ERROR", "La contraseña no coincide con la que proporcionaste.")
+        return
+    
+    # Verificar si el usuario ya existe en la base de datos
+    if verificar_usuario_existente(cnx, valor_entry3):
+        messagebox.showerror("Error", f"El usuario '{valor_entry3}' ya existe")
     else:
-        messagebox.showerror("ERROR", "Los datos ingresados son inválidos, vuelva a intentarlo")
+        insert_data(cnx, valor_entry1, valor_entry2, valor_entry4, valor_entry5, valor_entry7)
+        messagebox.showinfo("Aviso", "Los datos han sido guardados exitosamente")
+        llamar_2()
 
 def main():
     # creamos el frame del título
