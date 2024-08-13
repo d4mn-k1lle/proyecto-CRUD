@@ -2,7 +2,8 @@ import tkinter as tk
 from ayudas import *
 from bd import crear_conexion,ejecutar_datos
 from tkinter import messagebox
-
+from tkcalendar import *
+from datetime import datetime
 
 def verificar_valor_en_lista(valor, lista):
     if valor in lista:
@@ -29,9 +30,11 @@ def crear_modificar(root,tree,lista_permitidos):
             valor_definitivo=valores[5]
             vare6=valor_definitivo
         valor_1=vare1.capitalize()
+        valor_2=vare2.title()
+        valor_3=vare3.title()
         if valor_1 in lista_permitidos:
             conexion=crear_conexion()
-            valoress=[valor_1,vare2,vare3,vare4,vare5,vare6]
+            valoress=[valor_1,valor_2,valor_3,vare4,vare5,vare6]
             insertar=f"UPDATE estudiantes SET curso='{valoress[0]}',nombres='{valoress[1]}', apellidos='{valoress[2]}',fecha_ingreso='{valoress[3]}',dni={valoress[4]},observaciones='{valoress[5]}' where dni={valoress[4]};"
             ejecutar_datos(conexion,insertar)
             conexion.close() 
@@ -39,39 +42,17 @@ def crear_modificar(root,tree,lista_permitidos):
         else:
             messagebox.showerror("Error","el primer dato es invalido")
     
-    def extraer_numeros_de_fecha(fecha):
-        numeros = [int(c) for c in fecha if c.isdigit()]
-        return numeros
 
-    def extraer_numeros_de_fecha2(fecha):
-        return ''.join(filter(str.isdigit, fecha))
 
-    def valor_entry4(treeview, entry, posicion):
-        try:
-            seleccionado = treeview.selection()
-            if not seleccionado:
-                print("No hay selección")
-                
-
-            valores = treeview.item(seleccionado, 'values')
-            if len(valores) <= posicion:
-                raise ValueError(f"La fila seleccionada no tiene al menos {posicion + 1} valores")
-
-            # Extraer números del valor de la posición especificada
-            valor = valores[posicion]
-            valor_numeros = extraer_numeros_de_fecha2(valor)
-            entry.delete(0, tk.END)  # Limpiar el contenido del Entry
-            entry.insert(0, valor_numeros)  # Insertar los números en el Entry
-        # except ValueError as ve:
-            # messagebox.showerror("Error", str(ve))
-        # except Exception as e:
-            # messagebox.showerror("Error", f"Error inesperado: {str(e)}")
-        except:
-            print("Error")
     
     def validar_entrada(entrada):
     # Permitir solo dígitos
         return entrada.isdigit()
+    
+    def solo_letras(char):
+    # Retorna True si el carácter es una letra, False de lo contrario
+        return char.isalpha() or char.isspace()
+    
     
     def actualizar_textvar(event, textarea, textvar):#el event tiene que estar si o si aunque te marque que no se esta usando
         textvar.set(textarea.get("0.0", tk.END).strip())
@@ -86,6 +67,7 @@ def crear_modificar(root,tree,lista_permitidos):
             if len(valores) <= posicion:
                 raise ValueError(f"La fila seleccionada no tiene al menos {posicion + 1} valores")
 
+            
             # Obtener el valor de la posición especificada
             valor_definitivo = valores[posicion]
             textarea.delete('0.0', tk.END)  # Limpiar el contenido del Text
@@ -105,14 +87,17 @@ def crear_modificar(root,tree,lista_permitidos):
                 print("No hay selección")
 
             valores = treeview.item(seleccionado, 'values')
+            print(treeview.item(seleccionado,'values'))
             if len(valores) <= posicion:
                 raise ValueError(f"La fila seleccionada no tiene al menos {posicion + 1} valores")
 
             # Convertir el valor de la posición especificada a entero
             # valor_entero = int(valores[posicion])
-            entry.delete(0, tk.END)  # Limpiar el contenido del Entry
+            entry.config(validate="none")
             valor_definitivo=valores[posicion]
+            entry.delete(0, tk.END)  # Limpiar el contenido del Entry
             entry.insert(0, valor_definitivo)  # Insertar el valor entero en el Entry
+            entry.config(validate='key')
         # except ValueError as ve:
         #     messagebox.showerror("Error", str(ve))
         # except Exception as e:
@@ -144,6 +129,7 @@ def crear_modificar(root,tree,lista_permitidos):
     frame_inferior.pack(side="top")
     
     
+    
     #entry1-------------------------------------------------
     new_frame=crear_frame_auxiliar(frame_inferior,60)
     img = imagen(0)
@@ -153,13 +139,14 @@ def crear_modificar(root,tree,lista_permitidos):
 
     label1=tk.Label(new_frame,text="Curso:",font=("Times",14),fg="#666a88",bg="#fff")
     label1.place(relx=0.065,rely=0.0)
-    entry1 = tk.Entry(new_frame, textvariable=var_entry1, font=("Times", 13), fg="#222", bg="#fff", bd=1, relief=tk.SOLID,)
+    entry1 = tk.Entry(new_frame, textvariable=var_entry1, font=("Times", 13), fg="#222", bg="#fff", bd=1, relief=tk.SOLID)
     entry1.place(relx=0.015, rely=0.5, relwidth=0.95)
     valor_entry(tree,entry1,0)
     
     
     #entry2------------------------------------------------
     new_frame2=crear_frame_auxiliar(frame_inferior,60)
+    validacion = new_frame2.register(solo_letras)
     img = imagen(1)
     label_img=tk.Label(new_frame2,image=img,bg="#fff")
     label_img.image=img
@@ -167,13 +154,14 @@ def crear_modificar(root,tree,lista_permitidos):
 
     label2=tk.Label(new_frame2,text="Nombre/s:",font=("Times",14),fg="#666a88",bg="#fff")
     label2.place(relx=0.065,rely=0.0)
-    entry2 = tk.Entry(new_frame2, textvariable=var_entry2, font=("Times", 13), fg="#222", bg="#fff", bd=1, relief=tk.SOLID)
+    entry2 = tk.Entry(new_frame2, textvariable=var_entry2, font=("Times", 13), fg="#222", bg="#fff", bd=1, relief=tk.SOLID,validate="key",validatecommand=(validacion,'%S'))
     entry2.place(relx=0.015, rely=0.5, relwidth=0.95)
     valor_entry(tree,entry2,1)
 
 
     #entry3------------------------------------------------
     new_frame3=crear_frame_auxiliar(frame_inferior,60)
+    validacion2 = new_frame3.register(solo_letras)
     img = imagen(2)
     label_img3=tk.Label(new_frame3,image=img,bg="#fff")
     label_img3.image=img
@@ -181,28 +169,42 @@ def crear_modificar(root,tree,lista_permitidos):
 
     label3=tk.Label(new_frame3,text="Apellido/s:",font=("Times",14),fg="#666a88",bg="#fff")
     label3.place(relx=0.065,rely=0.0)
-    entry3 = tk.Entry(new_frame3, textvariable=var_entry3, font=("Times", 13), fg="#222", bg="#fff", bd=1, relief=tk.SOLID)
+    entry3 = tk.Entry(new_frame3, textvariable=var_entry3, font=("Times", 13), fg="#222", bg="#fff", bd=1, relief=tk.SOLID,validate="key",validatecommand=(validacion2,'%S'))
     entry3.place(relx=0.015, rely=0.5, relwidth=0.95)
     valor_entry(tree,entry3,2)
 
 
-    #entry4------------------------------------------------
+    #entry4----------------------------------------------
+    seleccionado=tree.selection()
+    valores=tree.item(seleccionado,'values')
+    valorsito=valores[3]
     new_frame4=crear_frame_auxiliar(frame_inferior,60)
-    img = imagen(3)
-    label_img=tk.Label(new_frame4,image=img,bg="#fff")
-    label_img.image=img
-    label_img.place(relx=0.015,rely=0.0)
-
-    validar_cmd = new_frame4.register(validar_entrada)
-    label4=tk.Label(new_frame4,text="F.Ingreso:",font=("Times",14),fg="#666a88",bg="#fff")
-    label4.place(relx=0.065,rely=0.0)
-    entry4 = tk.Entry(new_frame4, textvariable=var_entry4, font=("Times", 13), fg="#222", bg="#fff", bd=1, relief=tk.SOLID,validate="key", validatecommand=(validar_cmd, '%P'))
-    entry4.place(relx=0.015, rely=0.5, relwidth=0.95)
-    valor_entry4(tree,entry4,3)
+    boton_calendario=tk.Button(new_frame4,text="Fecha de ingreso",width=25,bd=1,relief="solid",bg="#fff",fg="#666a88",font=("Cambria",16,"bold"),command=lambda:calendario(var_entry4))
+    boton_calendario.place(rely=0.55,relx=0.5,anchor="center")
+    def calendario(var_entry4):
+        def obtener_fecha(calendari,var_entry4):
+            fecha_seleccionada=calendari.get_date()
+            fecha_sin_barras = fecha_seleccionada.replace('/', '')
+            var_entry4.set(fecha_sin_barras)
+            top2.destroy()
+        
+        fecha_inicial_remplazada=valorsito.replace('-','/')
+        fecha_inicial=datetime.strptime(fecha_inicial_remplazada,"%d/%m/%Y")
+        top2=tk.Toplevel(top)
+        top2.geometry("260x245+550+200")#260x185 tamaño del calendario 
+        top2.config(bg="#fff")
+        top2.resizable(False,False)
+        top2.grab_set()
+        calendario = Calendar(top2, selectmode='day', date_pattern='dd/mm/yyyy', locale='es',background="#fff",foreground="#000",weekendbackground='#fff',othermonthbackground='#fff',daybackground="#fff",showweeknumbers=False,selectbackground="#eee",selectforeground="#000",bordercolor="#fff",headersbackground="#fff",othermonthwebackground="#fff",font=("cambria",11,"italic"),year=fecha_inicial.year,month=fecha_inicial.month,day=fecha_inicial.day)
+        calendario.pack(side="top")
+        botonsito=tk.Button(top2,text="Definir Fecha",bg="#3C5BBA",fg="#fff",font=("Helvetica",11,"bold"),pady=0,bd=2,relief="flat",activebackground="#fff",activeforeground="#3C5BBA", overrelief="solid",width=26,command=lambda:obtener_fecha(calendario,var_entry4))
+        botonsito.place(rely=0.88,relx=0.5,anchor="center")
+    
 
 
     #entry5------------------------------------------------
     new_frame5=crear_frame_auxiliar(frame_inferior,60)
+    validar_cmd = new_frame5.register(validar_entrada)
     img = imagen(4)
     label_img=tk.Label(new_frame5,image=img,bg="#fff")
     label_img.image=img

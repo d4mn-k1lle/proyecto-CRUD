@@ -2,6 +2,8 @@ import tkinter as tk
 from ayudas import *
 from bd import crear_conexion,ejecutar_datos
 from tkinter import messagebox
+from tkcalendar import *
+from datetime import datetime
 
 
 def crear_eliminar(root,tree):
@@ -177,18 +179,30 @@ def crear_eliminar(root,tree):
 
 
     #entry4------------------------------------------------
+    seleccionado=tree.selection()
+    valores=tree.item(seleccionado,'values')
+    valorsito=valores[3]
     new_frame4=crear_frame_auxiliar(frame_inferior,60)
-    img = imagen(3)
-    label_img=tk.Label(new_frame4,image=img,bg="#fff")
-    label_img.image=img
-    label_img.place(relx=0.015,rely=0.0)
-
-    validar_cmd = new_frame4.register(validar_entrada)
-    label4=tk.Label(new_frame4,text="F.Ingreso:",font=("Times",14),fg="#666a88",bg="#fff")
-    label4.place(relx=0.065,rely=0.0)
-    entry4 = tk.Entry(new_frame4, textvariable=var_entry4, font=("Times", 13), fg="#222", bg="#fff", bd=1, relief=tk.SOLID,validate="key", validatecommand=(validar_cmd, '%P'))
-    entry4.place(relx=0.015, rely=0.5, relwidth=0.95)
-    valor_entry4(tree,entry4,3)
+    boton_calendario=tk.Button(new_frame4,text="Fecha de ingreso",width=25,bd=1,relief="solid",bg="#fff",fg="#666a88",font=("Cambria",16,"bold"),command=lambda:calendario(var_entry4))
+    boton_calendario.place(rely=0.55,relx=0.5,anchor="center")
+    def calendario(var_entry4):
+        def obtener_fecha(calendari,var_entry4):
+            fecha_seleccionada=calendari.get_date()
+            fecha_sin_barras = fecha_seleccionada.replace('/', '')
+            var_entry4.set(fecha_sin_barras)
+            top2.destroy()
+        
+        fecha_inicial_remplazada=valorsito.replace('-','/')
+        fecha_inicial=datetime.strptime(fecha_inicial_remplazada,"%d/%m/%Y")
+        top2=tk.Toplevel(top)
+        top2.geometry("260x245+550+200")#260x185 tamaño del calendario 
+        top2.config(bg="#fff")
+        top2.resizable(False,False)
+        top2.grab_set()
+        calendario = Calendar(top2, selectmode='day', date_pattern='dd/mm/yyyy', locale='es',background="#fff",foreground="#000",weekendbackground='#fff',othermonthbackground='#fff',daybackground="#fff",showweeknumbers=False,selectbackground="#eee",selectforeground="#000",bordercolor="#fff",headersbackground="#fff",othermonthwebackground="#fff",font=("cambria",11,"italic"),year=fecha_inicial.year,month=fecha_inicial.month,day=fecha_inicial.day)
+        calendario.pack(side="top")
+        botonsito=tk.Button(top2,text="Definir Fecha",bg="#3C5BBA",fg="#fff",font=("Helvetica",11,"bold"),pady=0,bd=2,relief="flat",activebackground="#fff",activeforeground="#3C5BBA", overrelief="solid",width=26,command=lambda:obtener_fecha(calendario,var_entry4))
+        botonsito.place(rely=0.88,relx=0.5,anchor="center")
 
 
     #entry5------------------------------------------------

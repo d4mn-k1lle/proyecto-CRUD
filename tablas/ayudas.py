@@ -32,27 +32,27 @@ def crear_entry_con_img(new_frame,i,ubicacionx,ubicaciony,texto,ubi1,ubi2,textva
         entry1 = tk.Entry(new_frame, textvariable=textvar, font=("Times", 13), fg="#222", bg="#fff", bd=1, relief=tk.SOLID)
     entry1.place(relx=ubirelx, rely=ubirely, relwidth=relwidth)
     
-def modificar_entry_con_img(x,new_frame,i,ubicacionx,ubicaciony,texto,ubi1,ubi2,textvar,ubirelx,ubirely,relwidth,validate_cmd,tree,entries,only_numbers=False):
-    selected_item = tree.selection()[0]  # Obtiene el ID del ítem seleccionado
-    item_values = tree.item(selected_item, 'Curso')
+# def modificar_entry_con_img(x,new_frame,i,ubicacionx,ubicaciony,texto,ubi1,ubi2,textvar,ubirelx,ubirely,relwidth,validate_cmd,tree,entries,only_numbers=False):
+#     selected_item = tree.selection()[0]  # Obtiene el ID del ítem seleccionado
+#     item_values = tree.item(selected_item, 'Curso')
     
-    img = imagen(i)#num_img
-    label_img=tk.Label(new_frame,image=img,bg="#fff")
-    label_img.image=img#esta linea es inprescindible pq sino pierde la referencia y no anda la imagen
-    label_img.place(relx=ubicacionx,rely=ubicaciony)#ubicacionx,ubicaciony
+#     img = imagen(i)#num_img
+#     label_img=tk.Label(new_frame,image=img,bg="#fff")
+#     label_img.image=img#esta linea es inprescindible pq sino pierde la referencia y no anda la imagen
+#     label_img.place(relx=ubicacionx,rely=ubicaciony)#ubicacionx,ubicaciony
 
-    label1=tk.Label(new_frame,text=texto,font=("Times",14),fg="#666a88",bg="#fff")#texto
-    label1.place(relx=ubi1,rely=ubi2)#ubi1,ubi2
+#     label1=tk.Label(new_frame,text=texto,font=("Times",14),fg="#666a88",bg="#fff")#texto
+#     label1.place(relx=ubi1,rely=ubi2)#ubi1,ubi2
 
-    if only_numbers:#si only numbers es true(es una parametro asi que se puede elegir) hace que solo se pueda usar numeros, lo hace con el validate_cmd(que esta en agregar)
-        entry1 = tk.Entry(new_frame, textvariable=textvar, font=("Times", 13), fg="#222", bg="#fff", bd=1, relief=tk.SOLID, validate="key", validatecommand=(validate_cmd, '%S'))
-    else:
-        entry1 = tk.Entry(new_frame, textvariable=textvar, font=("Times", 13), fg="#222", bg="#fff", bd=1, relief=tk.SOLID)
+#     if only_numbers:#si only numbers es true(es una parametro asi que se puede elegir) hace que solo se pueda usar numeros, lo hace con el validate_cmd(que esta en agregar)
+#         entry1 = tk.Entry(new_frame, textvariable=textvar, font=("Times", 13), fg="#222", bg="#fff", bd=1, relief=tk.SOLID, validate="key", validatecommand=(validate_cmd, '%S'))
+#     else:
+#         entry1 = tk.Entry(new_frame, textvariable=textvar, font=("Times", 13), fg="#222", bg="#fff", bd=1, relief=tk.SOLID)
         
-    entry1.delete(0, tk.END)
-    entry1.insert(0, item_values[x])
-    entries.append(entry1)
-    entry1.place(relx=ubirelx, rely=ubirely, relwidth=relwidth)
+#     entry1.delete(0, tk.END)
+#     entry1.insert(0, item_values[x])
+#     entries.append(entry1)
+#     entry1.place(relx=ubirelx, rely=ubirely, relwidth=relwidth)
     
         
 #para los inputs crea un frame, para que luego podamos poner la img y el label al lado y el input abajo
