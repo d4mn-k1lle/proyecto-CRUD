@@ -29,7 +29,7 @@ def imagen(i):
     img = fm_i.leer_imagen(camino_imagen[i], (20, 20))
     return img
 
-def obtener_valores(var_entry1, var_entry2, var_entry3, var_entry4, var_entry5, var_entry6, var_entry7):
+def obtener_valores(var_entry1, var_entry2, var_entry3, var_entry4, var_entry5, var_entry6, var_entry7,lb1,lb2,lb3,lb4,lb5,lb6,lb7,etr3,etr4,etr5,etr6,etr7):
     # Se guardan los valores de los var_entry en los valor_entry
     valor_entry1 = var_entry1.get()  # Nombre
     valor_entry2 = var_entry2.get()  # Apellido
@@ -40,21 +40,70 @@ def obtener_valores(var_entry1, var_entry2, var_entry3, var_entry4, var_entry5, 
     valor_entry7 = var_entry7.get()  # Email
 
     if not valor_entry1:
-        messagebox.showerror("ERROR", "El campo 'Nombre' está vacío.")
+        lb1.config(fg="#f00", font=("Times", 12,"underline"),text="Nombre:*")
     if not valor_entry2:
-        messagebox.showerror("ERROR", "El campo 'Apellido' está vacío.")
+        lb2.config(fg="#f00", font=("Times", 12,"underline"),text="Apellido:*")
     if not valor_entry3:
-        messagebox.showerror("ERROR", "El campo 'Usuario' está vacío.")
+        lb3.config(fg="#f00", font=("Times", 12,"underline"),text="Usuario:*")
+    if not valor_entry4:
+        lb4.config(fg="#f00", font=("Times", 12,"underline"),text="Confirmar Usuario:*")
     if not valor_entry5:
-        messagebox.showerror("ERROR", "El campo 'Contraseña' está vacío.")
+        lb5.config(fg="#f00", font=("Times", 12,"underline"),text="Contraseña:*")
+    if not valor_entry6:
+        lb6.config(fg="#f00", font=("Times", 12,"underline"),text="Confirmar Contraseña:*")
     if not valor_entry7:
-        messagebox.showerror("ERROR", "El campo 'Email' está vacío.")
+        lb7.config(fg="#f00", font=("Times", 12,"underline"),text="Email:*")
+
+    if valor_entry1:
+        lb1.config(fg="#666a88", font=("Times", 12),text="Nombre:")
+    if valor_entry2:
+        lb2.config(fg="#666a88", font=("Times", 12),text="Apellido:")
+    if valor_entry3:
+        lb3.config(fg="#666a88", font=("Times", 12),text="Usuario:")
+    if valor_entry4:
+        lb4.config(fg="#666a88", font=("Times", 12),text="Confirmar Usuario:")  
+    if valor_entry5:
+        lb5.config(fg="#666a88", font=("Times", 12),text="Contraseña:")
+    if valor_entry6:
+        lb6.config(fg="#666a88", font=("Times", 12),text="Confirmar Contraseña:")
+    if valor_entry7:
+        lb7.config(fg="#666a88", font=("Times", 12),text="Email:")
+    
+    if valor_entry3!=valor_entry4:
+        lb3.config(fg="#f00", font=("Times", 12),text="Usuario:*")
+        lb4.config(fg="#f00", font=("Times", 12),text="Confirmar Usuario:*")
+        if valor_entry3 and valor_entry4:  
+            etr3.config(fg="#f00")
+            etr4.config(fg="#f00")
+    if valor_entry3==valor_entry4 and valor_entry3 and valor_entry4:
+        lb3.config(fg="#666a88", font=("Times", 12),text="Usuario:")
+        lb4.config(fg="#666a88", font=("Times", 12),text="Confirmar Usuario:")  
+        if valor_entry3 and valor_entry4:
+            etr3.config(fg="#222")
+            etr4.config(fg="#222")
+           
+    if valor_entry5!=valor_entry6:
+        lb5.config(fg="#f00", font=("Times", 12),text="Contraseña:*")
+        lb6.config(fg="#f00", font=("Times", 12),text="Confirmar Contraseña:*")  
+        if valor_entry5 and valor_entry6:
+            etr5.config(fg="#f00")
+            etr6.config(fg="#f00")
+    if valor_entry5==valor_entry6 and valor_entry5 and valor_entry6:
+        lb5.config(fg="#666a88", font=("Times", 12),text="Contraseña:")
+        lb6.config(fg="#666a88", font=("Times", 12),text="Confirmar Contraseña:")  
+        if valor_entry5 and valor_entry6:
+            etr5.config(fg="#222")
+            etr6.config(fg="#222")
 
     # Verificar formato del email (endswith Sirve para comprobar si una cadena termina con un texto específico, en este caso dominios_permitidos )
-    dominios_permitidos = ["gmail.com", ".gob.ar"]
+    dominios_permitidos = [".gob.ar"]
     if not ("@" in valor_entry7 and any(valor_entry7.endswith(dominio) for dominio in dominios_permitidos)):
-        messagebox.showerror("ERROR", "El gmail es invalido.")
+        etr7.config(fg="#f00")
+        lb7.config(fg="#f00",text="Email(@abc.gob.ar):*")
         return
+    else:
+        etr7.config(fg="#222")
+        lb7.config(fg="#222",text="Email:")
 
     # Verifica si las confirmaciones estan correctas != compara entre una y otra, si no son iguales, manda error.
     if valor_entry3 != valor_entry4:
@@ -197,7 +246,7 @@ def main():
 
     # para que al llamarla sin paréntesis se ejecute solo cuando se ejecute el botón
     def obt_val():
-        obtener_valores(var_entry1, var_entry2, var_entry3, var_entry4, var_entry5, var_entry6, var_entry7)
+        obtener_valores(var_entry1, var_entry2, var_entry3, var_entry4, var_entry5, var_entry6, var_entry7,label1,label2,label3,label4,label5,label6,label7,entry3,entry4,entry5,entry6,entry7)
 
     bt_guardar = tk.Button(frame_restante, text="Crear usuario", width=400, bg="#226EAD", fg="#f0f0f0", font=("Helvetica", 14), bd=0, command=obt_val)
     bt_guardar.pack(pady=18, padx=7)
