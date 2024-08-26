@@ -16,6 +16,17 @@ def crear_modificar(root,tree,lista_permitidos):
     top.grab_set()
     top.resizable(False,False)
     
+    def capitalizar_palabras(event,entry):
+        # Obtener el texto actual del Entry
+        entry.config(validate="none")
+        current_text = entry.get()
+        # Capitalizar la primera letra de cada palabra
+        capitalized_text = current_text.title()
+        # Actualizar el texto del Entry
+        entry.delete(0, tk.END)
+        entry.insert(0, capitalized_text)
+        entry.config(validate="key")
+    
     
     def obtener_valores(var1,var2,var3,var4,var5,var6):
         vare1=var1.get()
@@ -157,6 +168,7 @@ def crear_modificar(root,tree,lista_permitidos):
     entry2 = tk.Entry(new_frame2, textvariable=var_entry2, font=("Times", 13), fg="#222", bg="#fff", bd=1, relief=tk.SOLID,validate="key",validatecommand=(validacion,'%S'))
     entry2.place(relx=0.015, rely=0.5, relwidth=0.95)
     valor_entry(tree,entry2,1)
+    entry2.bind('<KeyRelease>',lambda event:capitalizar_palabras(event,entry2))
 
 
     #entry3------------------------------------------------
@@ -172,6 +184,7 @@ def crear_modificar(root,tree,lista_permitidos):
     entry3 = tk.Entry(new_frame3, textvariable=var_entry3, font=("Times", 13), fg="#222", bg="#fff", bd=1, relief=tk.SOLID,validate="key",validatecommand=(validacion2,'%S'))
     entry3.place(relx=0.015, rely=0.5, relwidth=0.95)
     valor_entry(tree,entry3,2)
+    entry3.bind('<KeyRelease>',lambda event:capitalizar_palabras(event,entry3))
 
 
     #entry4----------------------------------------------

@@ -11,6 +11,7 @@ from agregar import crear_agregar
 from modificar import crear_modificar
 from eliminar import crear_eliminar
 
+
 def tablita(conexion,curso):
     consulta=f"select * from estudiantes where curso='{curso}';"
     data=mostrar_tabla(conexion,consulta)
@@ -23,12 +24,27 @@ def tablita(conexion,curso):
         
     conexion.close()
     
+def mostrar_menu(event):
+    context_menu.post(event.x_root, event.y_root)
+
+def agregar_boton():
+    pass
+
+def cancelar_menu():
+    context_menu.unpost()
 
 #creamos la ventana principal
 ventana=tk.Tk()
 ventana.title("Tabla Ciclo Basico")
 ventana.geometry("960x560")
 ventana.resizable(False,False)
+
+#definimos menu para poder usar en los botones de arriba
+context_menu = tk.Menu(ventana, tearoff=0, bg="#fff", fg="#000", font=("Helvetica", 8,"bold italic"),bd=0,activebackground="#f0f0f0",activeforeground="#000")
+context_menu.add_command(label="Agregar botón", command=agregar_boton)
+context_menu.add_separator()
+context_menu.add_command(label="Cancelar", command=cancelar_menu)
+
 #es obligatoria ya que hace que se pueda superponer un frame sobre otro(botones de arriba 1a,1b,1c cunado pasas pagina se cambia a otro frame y asi la cantidad necesaria)
 def show_frame(frame):
     frame.tkraise()
@@ -148,6 +164,9 @@ for frame in (frame_botones_sup,frame_botones_sup2,frame_botones_sup3):
     frame.place(x=0, y=0, width=795, height=50)
 
 #---------------#
+
+for frame in (frame_botones_sup,frame_botones_sup2,frame_botones_sup3):
+    frame.bind("<Button-3>", mostrar_menu)
 
 #creamos los botones con las funciones del principio y con el lambda hacemos que solo se ejecuten si se presiona el boton
 boton_1a=crear_boton_curso(frame_botones_sup,"1ºA",0.08,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 1ºA","1a"))

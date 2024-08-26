@@ -4,9 +4,19 @@ from bd import crear_conexion,ejecutar_datos
 from tkinter import messagebox
 from tkcalendar import *
 
+
 def crear_agregar(root,tree,lista_permitidos):#6 entrys y el arbol, es para que al presionar el boton de Ingresar Estudiante obtenga los valores y los inserte(el boton esta al final del codigo)
-    #falta conseguir los valores y que se inseerten
-    #Cerrar la ventana secundaria anterior si existe
+    def capitalizar_palabras(event,entry):
+        # Obtener el texto actual del Entry
+        entry.config(validate="none")
+        current_text = entry.get()
+        # Capitalizar la primera letra de cada palabra
+        capitalized_text = current_text.title()
+        # Actualizar el texto del Entry
+        entry.delete(0, tk.END)
+        entry.insert(0, capitalized_text)
+        entry.config(validate="key")
+    
     var_entry1=tk.StringVar()#Curso
     var_entry2=tk.StringVar()#Nombre/s
     var_entry3=tk.StringVar()#Apellido/s
@@ -86,6 +96,8 @@ def crear_agregar(root,tree,lista_permitidos):#6 entrys y el arbol, es para que 
     label2.place(relx=0.065,rely=0.0)
     entry2 = tk.Entry(new_frame2, textvariable=var_entry2, font=("Times", 13), fg="#222", bg="#fff", bd=1, relief=tk.SOLID,validate="key",validatecommand=(validacion,'%S'))
     entry2.place(relx=0.015, rely=0.5, relwidth=0.95)
+    entry2.bind('<KeyRelease>',lambda event:capitalizar_palabras(event,entry2))
+
     
     #-----------------------------------------------#
     new_frame3=crear_frame_auxiliar(frame_inferior,60)
@@ -99,6 +111,7 @@ def crear_agregar(root,tree,lista_permitidos):#6 entrys y el arbol, es para que 
     label3.place(relx=0.065,rely=0.0)
     entry3 = tk.Entry(new_frame3, textvariable=var_entry3, font=("Times", 13), fg="#222", bg="#fff", bd=1, relief=tk.SOLID,validate="key",validatecommand=(validacion,'%S'))
     entry3.place(relx=0.015, rely=0.5, relwidth=0.95)
+    entry3.bind('<KeyRelease>',lambda event:capitalizar_palabras(event,entry3))
     
     #-----------------------------------------------#
     #cuarto entry
