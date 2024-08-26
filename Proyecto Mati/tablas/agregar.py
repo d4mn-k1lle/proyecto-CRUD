@@ -12,6 +12,9 @@ def crear_agregar(root, tree, lista_permitidos):
     var_entry5 = tk.StringVar()  # DNI
     var_entry6 = tk.StringVar()  # Observaciones
     
+    # Definir cursos permitidos
+    cursos_permitidos = ["Curso 1", "Curso 2", "Curso 3", "Curso 4"]  # Cambia esto según tus necesidades
+    
     def obtener_valores(var1, var2, var3, var4, var5, var6):
         vare1 = var1.get()
         vare2 = var2.get()
@@ -84,9 +87,18 @@ def crear_agregar(root, tree, lista_permitidos):
     
     validate_cmd = top.register(solo_numeros)
     
-    new_frame = crear_frame_auxiliar(frame_inferior, 60)
-    crear_entry_con_img(new_frame, 0, 0.015, 0.0, "Curso", 0.065, 0.0, var_entry1, 0.015, 0.5, 0.95, validate_cmd)
+    # Frame para el curso con menú desplegable
+    new_frame1 = tk.Frame(frame_inferior, bg="#fff")
+    new_frame1.pack(pady=10)
     
+    label1 = tk.Label(new_frame1, text="Curso:", font=("Times", 14), fg="#666a88", bg="#fff")
+    label1.pack(side="left", padx=10)
+    
+    curso_menu = tk.OptionMenu(new_frame1, var_entry1, *cursos_permitidos)
+    curso_menu.config(font=("Times", 13), bg="#fff", fg="#222")
+    curso_menu.pack(side="left")
+    
+    # Otras entradas de datos
     new_frame2 = crear_frame_auxiliar(frame_inferior, 60)
     validacion = new_frame2.register(solo_letras)
     img = imagen(1)

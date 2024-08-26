@@ -32,7 +32,7 @@ class frames_imagenes:
     
     #creamos la funcion para que me envie al registro
     def abrir_archivo(self):
-        ruta_archivo = "Proyecto Mati\login_intento-legible.8\intento-registro4.py"
+        ruta_archivo = r"Proyecto mati  cambios administrador y calendario\Proyecto Mati\login_intento-legible.8\intento-registro4.py"
         try:
             subprocess.Popen(["python", ruta_archivo])
         except FileNotFoundError as e:
@@ -42,16 +42,16 @@ class frames_imagenes:
             
     #creamos la funcion igual nada mas que me envie al login
     def abrir_archivo_registro(self):
-        ruta_archivo = "Proyecto Mati\login_intento-legible.8/login-principal.py"
+        ruta_archivo = r"Proyecto mati  cambios administrador y calendario\Proyecto Mati\login_intento-legible.8/login-principal.py"
         try:
             subprocess.Popen(["python", ruta_archivo])
         except FileNotFoundError as e:
-            messagebox.showerror("Error", f"No se pudo encontrar el archivo: {ruta_archivo}")
+            messagebox.showerror("Error", f"No se ha podido encontrar el archivo: {ruta_archivo}")
         except Exception as e:
             messagebox.showerror("Error", f"Error al abrir el archivo: {e}")
     
     def abrir_archivo_panelcontrol(self):
-        ruta_archivo = r"Proyecto Mati\tablas\elegir_modalidad.py"
+        ruta_archivo = r"Proyecto mati  cambios administrador y calendario\Proyecto Mati\tablas\elegir_modalidad.py"
         try:
             subprocess.Popen(["python", ruta_archivo])
         except FileNotFoundError as e:

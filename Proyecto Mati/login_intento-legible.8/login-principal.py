@@ -34,7 +34,7 @@ def main_login():
     frame_izq.pack_propagate(False)#hacer que el frame mantenga su tamaño (si o si necesario)
 
     #-- llamammos la imagen y le damos tamaño --#
-    camino_imagen="Proyecto Mati\login_intento-legible.8\imagenes/logo_escuela.png"
+    camino_imagen=r"Proyecto mati  cambios administrador y calendario\Proyecto Mati\login_intento-legible.8\imagenes\logo_escuela.png"
     img=fm_i.leer_imagen(camino_imagen,(200,200))#imagen y tamaño asignados a img
 
     label_img=tk.Label(frame_izq,image=img)#se 
@@ -49,7 +49,7 @@ def main_login():
     frame_NorOeste.pack_propagate(False)
 
     #-- titulo --#
-    label_titulo=tk.Label(frame_NorOeste,text="Inicio de sesion",font=("Times",42),bg="#fafafa",fg="#666a88")#0B4EBD antes
+    label_titulo=tk.Label(frame_NorOeste,text="Inicio de sesión",font=("Times",42),bg="#fafafa",fg="#666a88")#0B4EBD antes
     label_titulo.pack(expand=True,pady=20)
 
     #-- creamos el frame de abajo a la derecha --#
@@ -59,7 +59,7 @@ def main_login():
     #aca usamos rely 1.0 para que se ubique en una esquina de abajo en este caso la de abajo a la derecha (incluyendo a relx=1.0)
 
     #-- creamos el label usuario --#
-    label1=tk.Label(frame_SurEste,text="Usuario: ",font=("Times",14),fg="#666a88",bg="#fafafa")#0B4EBD antes
+    label1=tk.Label(frame_SurEste,text="Usuario : ",font=("Times",14),fg="#666a88",bg="#fafafa")#0B4EBD antes
     label1.pack(pady=10,padx=15,anchor="w")
 
     #-- creamos el input del usuario(mas adelante si quieren le podriamos poner un placeholder) --#
@@ -67,7 +67,7 @@ def main_login():
     entry1.pack(pady=5,padx=15,anchor="w")
 
     #-- creamos el label contraseña --#
-    label2=tk.Label(frame_SurEste,text="Contraseña: ",font=("Times",14),fg="#666a88",bg="#fafafa")#0b4ebd antes
+    label2=tk.Label(frame_SurEste,text="Contraseña : ",font=("Times",14),fg="#666a88",bg="#fafafa")#0b4ebd antes
     label2.pack(pady=11,padx=15,anchor="w")
 
     #-- creamos el input de la contraseña y con el show hacemos que no se vea sino que se vean asteriscos --#
@@ -89,7 +89,7 @@ def main_login():
             cnx.close()  # Cerrar conexión después de usarla
     
     #-- botton de iniciar sesion y su ubicacion en la ventana --#
-    boton1=tk.Button(frame_SurEste,text="Iniciar sesion",font=("Helvetica",15,"bold"),bg="#0B4EBD",bd=0,fg="#fafafa",width=80,height=1,command=lambda:registro())
+    boton1=tk.Button(frame_SurEste,text="Iniciar sesión",font=("Helvetica",15,"bold"),bg="#0B4EBD",bd=0,fg="#fafafa",width=80,height=1,command=lambda:registro())
     boton1.pack(padx=16,pady=28)
 
 

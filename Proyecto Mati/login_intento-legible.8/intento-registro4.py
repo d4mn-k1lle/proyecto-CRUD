@@ -19,13 +19,13 @@ ventana.resizable(width=False, height=False)  # que no se pueda agrandar ni achi
 
 # -- creamos la funcion que lo que hace es agarra de la lista y utiliza la funcion leer imagen y le asignamos un tamaño de 20x20px -- #
 def imagen(i):
-    camino_imagen=["Proyecto Mati\login_intento-legible.8\imagenes/nombre.png",
-                   "Proyecto Mati\login_intento-legible.8\imagenes/apellido.png",
-                   "Proyecto Mati\login_intento-legible.8\imagenes/usuario.png",
-                   "Proyecto Mati\login_intento-legible.8\imagenes/confirmacion_redonda.png",
-                   "Proyecto Mati\login_intento-legible.8\imagenes/contraseña.png",
-                   "Proyecto Mati\login_intento-legible.8\imagenes/confirmacion_redonda.png",
-                   "Proyecto Mati\login_intento-legible.8\imagenes/email.png"]
+    camino_imagen=[r"Proyecto mati  cambios administrador y calendario\Proyecto Mati\login_intento-legible.8\imagenes/nombre.png",
+                   r"Proyecto mati  cambios administrador y calendario\Proyecto Mati\login_intento-legible.8\imagenes/apellido.png",
+                   r"Proyecto mati  cambios administrador y calendario\Proyecto Mati\login_intento-legible.8\imagenes/usuario.png",
+                   r"Proyecto mati  cambios administrador y calendario\Proyecto Mati\login_intento-legible.8\imagenes/confirmacion_redonda.png",
+                   r"Proyecto mati  cambios administrador y calendario\Proyecto Mati\login_intento-legible.8\imagenes/contraseña.png",
+                   r"Proyecto mati  cambios administrador y calendario\Proyecto Mati\login_intento-legible.8\imagenes/confirmacion_redonda.png",
+                   r"Proyecto mati  cambios administrador y calendario\Proyecto Mati\login_intento-legible.8\imagenes/email.png"]
     img = fm_i.leer_imagen(camino_imagen[i], (20, 20))
     return img
 
@@ -56,10 +56,10 @@ def obtener_valores(var_entry1, var_entry2, var_entry3, var_entry4, var_entry5, 
             messagebox.showerror("Error", f"El usuario '{valor_entry3}' ya existe")
         else:
             insert_data(cnx, valor_entry1, valor_entry2, valor_entry4, valor_entry5, valor_entry7)
-            messagebox.showinfo("Aviso", "Los datos han sido guardados exitosamente")
+            messagebox.showinfo("Aviso", "Los datos han sido guardados correctamente")
             llamar_2()
     else:
-        messagebox.showerror("ERROR", "Los datos ingresados son inválidos, vuelva a intentarlo")
+        messagebox.showerror("ERROR", "Los datos proporcionados son inválidos, vuelva a intentarlo")
 
 def main():
     # creamos el frame del título
@@ -93,7 +93,7 @@ def main():
     label_img.configure(bg="#f0f0f0")
     label_img.place(relx=0.01, rely=0.0)  # ubicación
 
-    label1 = tk.Label(new_frame, text="Nombre:", font=("Times", 12), fg="#666a88", bg="#f0f0f0")
+    label1 = tk.Label(new_frame, text="Nombre :", font=("Times", 12), fg="#666a88", bg="#f0f0f0")
     label1.place(relx=0.06, rely=0.0)
 
     entry1 = tk.Entry(new_frame, textvariable=var_entry1, font=("Times", 11), fg="#222", bg="#fff", bd=1, relief=tk.SOLID)
@@ -107,7 +107,7 @@ def main():
     label_img2.configure(bg="#f0f0f0")
     label_img2.place(relx=0.01, rely=0.0)
 
-    label2 = tk.Label(new_frame2, text="Apellido:", font=("Times", 12), fg="#666a88", bg="#f0f0f0")
+    label2 = tk.Label(new_frame2, text="Apellido :", font=("Times", 12), fg="#666a88", bg="#f0f0f0")
     label2.place(relx=0.06, rely=0.0)
 
     entry2 = tk.Entry(new_frame2, textvariable=var_entry2, font=("Times", 11), fg="#222", bg="#fff", bd=1, relief=tk.SOLID)
@@ -121,7 +121,7 @@ def main():
     label_img3.configure(bg="#f0f0f0")
     label_img3.place(relx=0.01, rely=0.0)
 
-    label3 = tk.Label(new_frame3, text="Usuario:", font=("Times", 12), fg="#666a88", bg="#f0f0f0")
+    label3 = tk.Label(new_frame3, text="Usuario :", font=("Times", 12), fg="#666a88", bg="#f0f0f0")
     label3.place(relx=0.06, rely=0.0)
 
     entry3 = tk.Entry(new_frame3, textvariable=var_entry3, font=("Times", 11), fg="#222", bg="#fff", bd=1, relief=tk.SOLID)
@@ -135,7 +135,7 @@ def main():
     label_img4.configure(bg="#f0f0f0")
     label_img4.place(relx=0.01, rely=0.0)
 
-    label4 = tk.Label(new_frame4, text="Confirmar usuario:", font=("Times", 12), fg="#666a88", bg="#f0f0f0")
+    label4 = tk.Label(new_frame4, text="Confirmar usuario :", font=("Times", 12), fg="#666a88", bg="#f0f0f0")
     label4.place(relx=0.057, rely=0.0)
 
     entry4 = tk.Entry(new_frame4, textvariable=var_entry4, font=("Times", 11), fg="#222", bg="#fff", bd=1, relief=tk.SOLID)
@@ -149,7 +149,7 @@ def main():
     label_img5.configure(bg="#f0f0f0")
     label_img5.place(relx=0.01, rely=0.0)
 
-    label5 = tk.Label(new_frame5, text="Contraseña:", font=("Times", 12), fg="#666a88", bg="#f0f0f0")
+    label5 = tk.Label(new_frame5, text="Contraseña :", font=("Times", 12), fg="#666a88", bg="#f0f0f0")
     label5.place(relx=0.06, rely=0.0)
 
     entry5 = tk.Entry(new_frame5, textvariable=var_entry5, font=("Times", 11), fg="#222", bg="#fff", bd=1, relief=tk.SOLID, show="*")
@@ -163,7 +163,7 @@ def main():
     label_img6.configure(bg="#f0f0f0")
     label_img6.place(relx=0.01, rely=0.0)
 
-    label6 = tk.Label(new_frame6, text="Confirmar contraseña:", font=("Times", 12), fg="#666a88", bg="#f0f0f0")
+    label6 = tk.Label(new_frame6, text="Confirmar contraseña :", font=("Times", 12), fg="#666a88", bg="#f0f0f0")
     label6.place(relx=0.06, rely=0.0)
 
     entry6 = tk.Entry(new_frame6, textvariable=var_entry6, font=("Times", 11), fg="#222", bg="#fff", bd=1, relief=tk.SOLID, show="*")
@@ -177,7 +177,7 @@ def main():
     label_img7.configure(bg="#f0f0f0")
     label_img7.place(relx=0.013, rely=0.0)
 
-    label7 = tk.Label(new_frame7, text="Email:", font=("Times", 12), fg="#666a88", bg="#f0f0f0")
+    label7 = tk.Label(new_frame7, text="Email :", font=("Times", 12), fg="#666a88", bg="#f0f0f0")
     label7.place(relx=0.067, rely=0.0)
 
     entry7 = tk.Entry(new_frame7, textvariable=var_entry7, font=("Times", 11), fg="#222", bg="#fff", bd=1, relief=tk.SOLID)

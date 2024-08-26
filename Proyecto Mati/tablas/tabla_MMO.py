@@ -106,7 +106,7 @@ frame_logo.pack(side=tk.TOP)
 frame_logo.pack_propagate(False)
 
 #-- le damos la ruta de la imagen y lo metemos en image --# 
-image_path = "Proyecto Mati\login_intento-legible.8\imagenes/logo_escuela.png" 
+image_path = r"Proyecto mati  cambios administrador y calendario\Proyecto Mati\login_intento-legible.8\imagenes\logo_escuela.png" 
 image = Image.open(image_path)
 
 #-- le damos el tamaño y la achicamos con calidad con lanczos --#
@@ -127,25 +127,25 @@ frame_botones_izq.pack(side="bottom")
 #---------------#
 #botones de la izquierda
 #-- creamos el boton de ciclo basico --#
-boton_Basico=crear_boton_izq(frame_botones_izq,"Basico",0.12,0.05,"active",1,r"Proyecto Mati\tablas\tabla_basico.py")
+boton_Basico=crear_boton_izq(frame_botones_izq,"Básico",0.12,0.05,"active",1,r"Proyecto mati  cambios administrador y calendario\Proyecto Mati\tablas\tabla_basico.py")
 
 #-- creamos el boton de Ciclo Superior (deshabilitado)--#
-boton_Superior=crear_boton_izq(frame_botones_izq,"Superior:",0.12,0.20,"disabled",4,r"Proyecto Mati\tablas\tabla-basico.py")
+boton_Superior=crear_boton_izq(frame_botones_izq,"Superior:",0.12,0.20,"disabled",4,r"Proyecto mati  cambios administrador y calendario\Proyecto Mati\tablas\tabla-basico.py")
 
 #-- creamos el boton de MMO --#
-boton_Mmo=crear_boton_izq(frame_botones_izq,"MMO",0.12,0.304,"active",4,r"Proyecto Mati\tablas\tabla_MMO.py")
+boton_Mmo=crear_boton_izq(frame_botones_izq,"MMO",0.12,0.304,"active",4,r"Proyecto mati  cambios administrador y calendario\Proyecto Mati\tablas\tabla_MMO.py")
 
 #-- creamos el boton de informatica --#
-boton_Informatica=crear_boton_izq(frame_botones_izq,"Informatica",0.12,0.408,"active",4,r"Proyecto Mati\tablas\tabla_informatica.py")
+boton_Informatica=crear_boton_izq(frame_botones_izq,"Informática",0.12,0.408,"active",4,r"Proyecto mati  cambios administrador y calendario\Proyecto Mati\tablas\tabla_informatica.py")
 
 #-- creamos el boton de Programacion --#
-boton_Programacion=crear_boton_izq(frame_botones_izq,"Programacion",0.12,0.511,"active",4,r"Proyecto Mati\tablas\tabla_programacion.py")
+boton_Programacion=crear_boton_izq(frame_botones_izq,"Programación",0.12,0.511,"active",4,r"Proyecto mati  cambios administrador y calendario\Proyecto Mati\tablas\tabla_programacion.py")
 
 #-- creamos el boton de Egresados --#
-boton_Egresados=crear_boton_izq(frame_botones_izq,"Egresados",0.12,0.66,"active",1,r"Proyecto Mati\tablas\tabla_egresados.py")
+boton_Egresados=crear_boton_izq(frame_botones_izq,"Egresados",0.12,0.66,"active",1,r"Proyecto mati  cambios administrador y calendario\Proyecto Mati\tablas\tabla_egresados.py")
 
 #-- creamos el boton de Exalumnos --#
-boton_est_pase=crear_boton_izq(frame_botones_izq,"Exalumnos",0.12,0.8,"active",1,r"Proyecto Mati\tablas\tabla_e_pases.py")
+boton_est_pase=crear_boton_izq(frame_botones_izq,"Exalumnos",0.12,0.8,"active",1,r"Proyecto mati  cambios administrador y calendario\Proyecto Mati\tablas\tabla_e_pases.py")
 
 #---------------#
 

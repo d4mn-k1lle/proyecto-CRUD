@@ -106,7 +106,7 @@ frame_logo.pack(side=tk.TOP)
 frame_logo.pack_propagate(False)
 
 #-- le damos la ruta de la imagen y lo metemos en image --# 
-image_path = "Proyecto Mati\login_intento-legible.8\imagenes/logo_escuela.png" 
+image_path = r"Proyecto mati  cambios administrador y calendario\Proyecto Mati\login_intento-legible.8\imagenes\logo_escuela.png" 
 image = Image.open(image_path)
 
 #-- le damos el tamaño y la achicamos con calidad con lanczos --#
@@ -127,25 +127,25 @@ frame_botones_izq.pack(side="bottom")
 #---------------#
 #botones de la izquierda
 #-- creamos el boton de ciclo basico --#
-boton_Basico=crear_boton_izq(frame_botones_izq,"Basico",0.12,0.05,"active",1,r"Proyecto Mati\tablas\tabla_basico.py")
+boton_Basico=crear_boton_izq(frame_botones_izq,"Básico",0.12,0.05,"active",1,r"Proyecto mati  cambios administrador y calendario\Proyecto Mati\tablas\tabla_basico.py")
 
 #-- creamos el boton de Ciclo Superior (deshabilitado)--#
-boton_Superior=crear_boton_izq(frame_botones_izq,"Superior:",0.12,0.20,"disabled",4,r"Proyecto Mati\tablas\tabla-basico.py")
+boton_Superior=crear_boton_izq(frame_botones_izq,"Superior:",0.12,0.20,"disabled",4,r"Proyecto mati  cambios administrador y calendario\Proyecto Mati\tablas\tabla-basico.py")
 
 #-- creamos el boton de MMO --#
-boton_Mmo=crear_boton_izq(frame_botones_izq,"MMO",0.12,0.304,"active",4,r"Proyecto Mati\tablas\tabla_MMO.py")
+boton_Mmo=crear_boton_izq(frame_botones_izq,"MMO",0.12,0.304,"active",4,r"Proyecto mati  cambios administrador y calendario\Proyecto Mati\tablas\tabla_MMO.py")
 
 #-- creamos el boton de informatica --#
-boton_Informatica=crear_boton_izq(frame_botones_izq,"Informatica",0.12,0.408,"active",4,r"Proyecto Mati\tablas\tabla_informatica.py")
+boton_Informatica=crear_boton_izq(frame_botones_izq,"Informática",0.12,0.408,"active",4,r"Proyecto mati  cambios administrador y calendario\Proyecto Mati\tablas\tabla_informatica.py")
 
 #-- creamos el boton de Programacion --#
-boton_Programacion=crear_boton_izq(frame_botones_izq,"Programacion",0.12,0.511,"active",4,r"Proyecto Mati\tablas\tabla_programacion.py")
+boton_Programacion=crear_boton_izq(frame_botones_izq,"Programación",0.12,0.511,"active",4,r"Proyecto mati  cambios administrador y calendario\Proyecto Mati\tablas\tabla_programacion.py")
 
 #-- creamos el boton de Egresados --#
-boton_Egresados=crear_boton_izq(frame_botones_izq,"Egresados",0.12,0.66,"active",1,r"Proyecto Mati\tablas\tabla_egresados.py")
+boton_Egresados=crear_boton_izq(frame_botones_izq,"Egresados",0.12,0.66,"active",1,r"Proyecto mati  cambios administrador y calendario\Proyecto Mati\tablas\tabla_egresados.py")
 
 #-- creamos el boton de Exalumnos --#
-boton_est_pase=crear_boton_izq(frame_botones_izq,"Exalumnos",0.12,0.8,"active",1,r"Proyecto Mati\tablas\tabla_e_pases.py")
+boton_est_pase=crear_boton_izq(frame_botones_izq,"Exalumnos",0.12,0.8,"active",1,r"Proyecto mati  cambios administrador y calendario\Proyecto Mati\tablas\tabla_e_pases.py")
 
 #---------------#
 
@@ -182,10 +182,10 @@ for frame in (frame_botones_sup,frame_botones_sup2,frame_botones_sup3):
 #---------------#
 
 #creamos los botones con las funciones del principio y con el lambda hacemos que solo se ejecuten si se presiona el boton
-# boton_1a=crear_boton_curso(frame_botones_sup,"Basico",0.20,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico","basico"))
-boton_basico=crear_boton_curso(frame_botones_sup,"Basico",0.15,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico","P.basico"))
-boton_1c=crear_boton_curso(frame_botones_sup,"Programacion",0.385,0.5,lambda:DosEnUno(titulo_tabla,"Superior Programacion","p.programacion"))
-boton_1b=crear_boton_curso(frame_botones_sup,"Informatica",0.615,0.5,lambda:DosEnUno(titulo_tabla,"Superior Informatica","P.informatica"))
+# boton_1a=crear_boton_curso(frame_botones_sup,"Básico",0.20,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico","basico"))
+boton_básico=crear_boton_curso(frame_botones_sup,"Básico",0.15,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo básico","P.básico"))
+boton_1c=crear_boton_curso(frame_botones_sup,"Programación",0.385,0.5,lambda:DosEnUno(titulo_tabla,"Superior Programación","p.programación"))
+boton_1b=crear_boton_curso(frame_botones_sup,"Informática",0.615,0.5,lambda:DosEnUno(titulo_tabla,"Superior Informática","P.informática"))
 boton_1d=crear_boton_curso(frame_botones_sup,"MMO",0.85,0.5,lambda:DosEnUno(titulo_tabla,"Superior MMO","P.mmo"))
 # boton_2b=crear_boton_curso(frame_botones_sup,"6º4",0.78,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 6º4","6-4"))
 # boton_siguiente_2=crear_boton_cambio(frame_botones_sup,"-->",0.92,0.5,frame_botones_sup2)
@@ -251,7 +251,7 @@ arboledo.insert(parent='', index='end', id=0, text='', values=("5to","Matias","G
 arboledo.insert(parent='', index='end', id=1, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
 
 #lista de valores permitidos para esta tabla
-lista_verificacion=["P.basico","P.programacion","P.informatica","P.mmo"]
+lista_verificacion=["P.básico","P.programación","P.informática","P.mmo"]
 
 #el boton de crear esta dsp, pq sino no me toma el arboledo ya que sino no existiria, en resumen, los 4 botones deben ir dsp del arboledo
 boton_nuevo=tk.Button(frame_acciones,text="Agregar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_agregar(ventana,arboledo,lista_verificacion))#1751ED

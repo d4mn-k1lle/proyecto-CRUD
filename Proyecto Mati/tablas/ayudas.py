@@ -10,18 +10,18 @@ def leer_imagen(ruta, tamaño):
 def imagen(i):  # El número de camino imagen 0,1,2,3,4,5
     # Combinando los caminos de imágenes de ambos códigos
     caminos_imagen = [
-        "Proyecto Mati\\tablas\\imagenes_tabla\\Curso.png",  # Imagen del primer código
-        "Proyecto Mati\\tablas\\imagenes_tabla\\nombre.png",
-        "Proyecto Mati\\tablas\\imagenes_tabla\\apellido.png",
-        "Proyecto Mati\\tablas\\imagenes_tabla\\f.ingreso.png",
-        "Proyecto Mati\\tablas\\imagenes_tabla\\dni3.png",
-        "Proyecto Mati\\tablas\\imagenes_tabla\\observacion.png",
-        "tablas\\imagenes_tabla\\Curso.png",  # Imagen del segundo código
-        "tablas\\imagenes_tabla\\nombre.png",
-        "tablas\\imagenes_tabla\\apellido.png",
-        "tablas\\imagenes_tabla\\f.ingreso.png",
-        "tablas\\imagenes_tabla\\dni3.png",
-        "tablas\\imagenes_tabla\\observacion.png",
+        r"Proyecto mati  cambios administrador y calendario\Proyecto Mati\tablas\imagenes_tabla\Curso.png",  # Imagen del primer código
+        r"Proyecto mati  cambios administrador y calendario\Proyecto Mati\tablas\imagenes_tabla\nombre.png",
+        r"Proyecto mati  cambios administrador y calendario\Proyecto Mati\tablas\imagenes_tabla\apellido.png",
+        r"Proyecto mati  cambios administrador y calendario\Proyecto Mati\tablas\imagenes_tabla\f.ingreso.png",
+        r"Proyecto mati  cambios administrador y calendario\Proyecto Mati\tablas\imagenes_tabla\dni3.png",
+        r"Proyecto mati  cambios administrador y calendario\Proyecto Mati\tablas\imagenes_tabla\observacion.png",
+        r"Proyecto mati  cambios administrador y calendario\Proyecto Mati\tablas\imagenes_tabla\Curso.png",  # Imagen del segundo código
+        r"Proyecto mati  cambios administrador y calendario\Proyecto Mati\tablas\imagenes_tabla\nombre.png",
+        r"Proyecto mati  cambios administrador y calendario\Proyecto Mati\tablas\imagenes_tabla\apellido.png",
+        r"Proyecto mati  cambios administrador y calendario\Proyecto Mati\tablas\imagenes_tabla\f.ingreso.png",
+        r"Proyecto mati  cambios administrador y calendario\Proyecto Mati\tablas\imagenes_tabla\dni3.png",
+        r"Proyecto mati  cambios administrador y calendario\Proyecto Mati\tablas\imagenes_tabla\observacion.png",
     ]
     img = leer_imagen(caminos_imagen[i], (20, 20))  # Uso de la función leer imagen y tamaño
     return img
