@@ -1,5 +1,6 @@
 import tkinter as tk
 #arbol
+from tkinter import messagebox
 from tkinter import ttk
 from bd import mostrar_tabla,crear_conexion
 from PIL import Image,ImageTk
@@ -9,6 +10,24 @@ from ayudas import abrir_archivo
 from agregar import crear_agregar
 from modificar import crear_modificar
 from eliminar import crear_eliminar
+
+
+def actualizar_combobox ():
+    conexion = crear_conexion()
+    consulta =f"select Curso from estudiantes;"
+    cursos=mostrar_tabla(conexion,consulta)
+    
+    if cursos:
+        course_cb['values'] = cursos
+    else:
+        messagebox.showwarning("ADVERTENCIA", "no encontraron cursos en la base de datos.")
+
+
+def course_changed(event):
+    curso_seleccionado = selected_course.get()
+    DosEnUno(titulo_tabla,"Ciclo superior " + curso_seleccionado,curso_seleccionado)
+    messagebox.showinfo("importante","curso seleccionado")
+
 
 def tablita(conexion,curso):
     consulta=f"select * from estudiantes where curso='{curso}';"
@@ -21,7 +40,7 @@ def tablita(conexion,curso):
         arboledo.insert("", "end", values=row)
         
     conexion.close()
-    
+
 
 #creamos la ventana principal
 ventana=tk.Tk()
@@ -31,13 +50,13 @@ ventana.resizable(False,False)
 #es obligatoria ya que hace que se pueda superponer un frame sobre otro(botones de arriba 1a,1b,1c cunado pasas pagina se cambia a otro frame y asi la cantidad necesaria)
 def show_frame(frame):
     frame.tkraise()
-    
+
 #esto dsp va hacer que al ejecutar un boton de los de arriba no solo modifique el titulo sino tambien la tabla para que muestre solo lo de ese curso
 def DosEnUno(label,texto,curso):
     conexion=crear_conexion()
     label.config(text=texto)
     tablita(conexion,curso)
-    
+
 #funcion para crear los botones de la izquierda,(el estado es para que el boton de "superior no se pueda presionar ni interactue(deshabilitado)")
 def crear_boton_izq(frame,texto,relx,rely,estado,pady,ruta):
     boton=tk.Button(frame,text=texto,font=("Times",14,"bold"),width=10,height=1,bg="#fff",fg="#111",borderwidth=2,relief="flat",activebackground="#fff",activeforeground="#111", overrelief="solid",state=estado,disabledforeground="#111",pady=pady,command=lambda:abrir_archivo(ventana,ruta))
@@ -49,7 +68,7 @@ def crear_boton_izq(frame,texto,relx,rely,estado,pady,ruta):
 def crear_boton_curso(frame, nombre, relx, rely,comando):
     boton = tk.Button(frame, text=nombre, width=10, height=1, bg="#4575F4", fg="#000", font=("Cambria", 10, "bold"), bd=2,relief="flat",activebackground="#4575F4",activeforeground="#111", overrelief="solid", pady=5,command=comando)#3C5BBA
     boton.place(relx=relx, rely=rely, anchor="center")
-    return boton
+    # return boton
 
 #para los botones de arriba de pasar de "pagina" osea los "-->,<--", la diferencia esta en el comando que en vez de elegirlo ya solo pones el frame al cual vas a mandar al frente
 def crear_boton_cambio(frame,nombre,relx,rely,frame_elegido):
@@ -117,7 +136,7 @@ boton_est_pase=crear_boton_izq(frame_botones_izq,"Exalumnos",0.12,0.8,"active",1
 #---------------#
 
 #creamos el frame superior(donde estan los botones de 1a,1b,1c)
-frame_cursos=tk.Frame(ventana,width=795,height=130,bg="#ccc")
+frame_cursos=tk.Frame(ventana,width=795,height=80,bg="#ccc")
 frame_cursos.pack(side="top")
 frame_cursos.pack_propagate(False)
 
@@ -135,32 +154,32 @@ titulo_tabla.place(relx=0.5,rely=0.45,anchor=("center"))
 
 #---------------#
 
-#creamos los 3 frames donde van a estar los 1ros,2dos y 3ros
-frame_botones_sup2=tk.Frame(frame_cursos,width=795,height=50,bg="#fff")
-frame_botones_sup3=tk.Frame(frame_cursos,width=795,height=50,bg="#fff")
-frame_botones_sup=tk.Frame(frame_cursos,width=795,height=50,bg="#fff")
+# #creamos los 3 frames donde van a estar los 1ros,2dos y 3ros
+# frame_botones_sup2=tk.Frame(frame_cursos,width=795,height=50,bg="#fff")
+# frame_botones_sup3=tk.Frame(frame_cursos,width=795,height=50,bg="#fff")
+# frame_botones_sup=tk.Frame(frame_cursos,width=795,height=50,bg="#fff")
 
-#---------------#
+# #---------------#
  
-# Añadir los frames a la ventana principal, uno sobre el otro(al superponerse se ocultan los demas)
-for frame in (frame_botones_sup,frame_botones_sup2,frame_botones_sup3):
-    frame.place(x=0, y=0, width=795, height=50)
+# # Añadir los frames a la ventana principal, uno sobre el otro(al superponerse se ocultan los demas)
+# for frame in (frame_botones_sup,frame_botones_sup2,frame_botones_sup3):
+#     frame.place(x=0, y=0, width=795, height=50)
 
-#---------------#
+# #---------------#
 
-#creamos los botones con las funciones del principio y con el lambda hacemos que solo se ejecuten si se presiona el boton
-boton_4_4=crear_boton_curso(frame_botones_sup,"4º4",0.08,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 4º4","4-4"))#################################### me falta hacer que funcione
-boton_4_6=crear_boton_curso(frame_botones_sup,"4º6",0.22,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 4º6","4-6"))
-boton_5_4=crear_boton_curso(frame_botones_sup,"5º4",0.36,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 5º4","5-4"))
-boton_5_5=crear_boton_curso(frame_botones_sup,"5º5",0.50,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 5º5","5-5"))
-boton_6_3=crear_boton_curso(frame_botones_sup,"6º3",0.64,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 6º3","6-3"))
-boton_6_4=crear_boton_curso(frame_botones_sup,"6º4",0.78,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 6º4","6-4"))
-# boton_siguiente_2=crear_boton_cambio(frame_botones_sup,"-->",0.92,0.5,frame_botones_sup2)
-#fin del primer frame
-#---------------#
-#inicio del segundo
-# boton_volver_1=crear_boton_cambio(frame_botones_sup2,"<--",0.08,0.5,frame_botones_sup)
-boton_7_3=crear_boton_curso(frame_botones_sup,"7º3",0.92,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 7º3","7-3"))
+# #creamos los botones con las funciones del principio y con el lambda hacemos que solo se ejecuten si se presiona el boton
+# boton_4_4=crear_boton_curso(frame_botones_sup,"4º4",0.08,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 4º4","4-4"))#################################### me falta hacer que funcione
+# boton_4_6=crear_boton_curso(frame_botones_sup,"4º6",0.22,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 4º6","4-6"))
+# boton_5_4=crear_boton_curso(frame_botones_sup,"5º4",0.36,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 5º4","5-4"))
+# boton_5_5=crear_boton_curso(frame_botones_sup,"5º5",0.50,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 5º5","5-5"))
+# boton_6_3=crear_boton_curso(frame_botones_sup,"6º3",0.64,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 6º3","6-3"))
+# boton_6_4=crear_boton_curso(frame_botones_sup,"6º4",0.78,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 6º4","6-4"))
+# # boton_siguiente_2=crear_boton_cambio(frame_botones_sup,"-->",0.92,0.5,frame_botones_sup2)
+# #fin del primer frame
+# #---------------#
+# #inicio del segundo
+# # boton_volver_1=crear_boton_cambio(frame_botones_sup2,"<--",0.08,0.5,frame_botones_sup)
+# boton_7_3=crear_boton_curso(frame_botones_sup,"7º3",0.92,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 7º3","7-3"))
 # boton_2d=crear_boton_curso(frame_botones_sup2,"2ºD",0.36,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 2ºD","2d"))
 # boton_3a=crear_boton_curso(frame_botones_sup2,"3ºA",0.50,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 3ºA","3a"))
 # boton_3b=crear_boton_curso(frame_botones_sup2,"3ºB",0.64,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 3ºB","3b"))
@@ -172,6 +191,30 @@ boton_7_3=crear_boton_curso(frame_botones_sup,"7º3",0.92,0.5,lambda:DosEnUno(ti
 # boton_volver_2=crear_boton_cambio(frame_botones_sup3,"<--",0.08,0.5,frame_botones_sup2)
 # boton_3d=crear_boton_curso(frame_botones_sup3,"3ºD",0.22,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 3ºD","3d"))
 #fin del tercero
+
+frame_comboBox = tk.Frame(ventana,bg="#fff",width=40,height=40)
+frame_comboBox.pack(fill=tk.X, padx=0,pady=0)
+
+# label = ttk.Label(frame_comboBox,text ="Porfavor seleccione un curso:",font=("Times",14), background="#fff" ,foreground="#4575F4")
+# label.place(relx=0.0,rely=0.0,anchor="center")
+
+#crear el combobox
+selected_course = tk.StringVar()
+course_cb = ttk.Combobox(frame_comboBox, textvariable=selected_course,background="#fff")
+course_cb.set("Por favor seleccione una opcion")
+
+#Inicializar el combobox con cursos de la base de datos
+actualizar_combobox()
+
+#Evitar que se pueda escribir un valor
+course_cb ['state'] = 'readonly'
+course_cb ['background'] = '#fff'
+
+#ubicar el widget
+course_cb.pack(fill= tk.X, padx=5, pady=15)
+
+#asociar el evento de sleccion al comboBox
+course_cb.bind('<<ComboboxSelected>>',course_changed) 
 
 #---------------#
 
@@ -234,3 +277,4 @@ boton_eliminar.place(relx=0.61,rely=0.5,anchor="center")
 
 #mostramos la ventana
 ventana.mainloop()
+
