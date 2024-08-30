@@ -3,9 +3,9 @@ from ayudas import *
 from bd import crear_conexion,ejecutar_datos
 from tkinter import messagebox
 from tkcalendar import *
-
+import json
 from datetime import date
-
+from tkinter import ttk
 
 
 def crear_agregar(root,tree,lista_permitidos):#6 entrys y el arbol, es para que al presionar el boton de Ingresar Estudiante obtenga los valores y los inserte(el boton esta al final del codigo)
@@ -52,7 +52,6 @@ def crear_agregar(root,tree,lista_permitidos):#6 entrys y el arbol, es para que 
             boton_calendario.config(fg="#f00")
         if not vare5:
             label5.config(fg="#f00",text="DNI:*",font=("Times",14,"underline"))
-            pass
         if not vare6:
             label6.config(fg="#f00",text="Observaciones:*",font=("Times",14,"underline"))
         
@@ -128,8 +127,53 @@ def crear_agregar(root,tree,lista_permitidos):#6 entrys y el arbol, es para que 
     label1=tk.Label(new_frame,text="Curso:",font=("Times",14),fg="#666a88",bg="#fff")#texto
     label1.place(relx=0.065,rely=0.0)#ubi1,ubi2
 
-    entry1 = tk.Entry(new_frame, textvariable=var_entry1, font=("Times", 13), fg="#222", bg="#fff", bd=1, relief=tk.SOLID)
-    entry1.place(relx=0.015, rely=0.5, relwidth=0.95)
+    def ventana_entry(opciones):
+        def guardar_opciones(opciones):
+            with open('opciones_btns.json', 'w') as file:
+                json.dump(opciones, file)
+        def obtener_curso():
+            nueva_opcion=var_entry1.get()
+            opciones=cargar_opciones()
+            if nueva_opcion and nueva_opcion not in opciones:
+                opciones.append(nueva_opcion)
+                combo['values']=opciones
+                guardar_opciones(opciones=opciones)
+                entry1.delete(0,tk.END)
+                top3.destroy()
+                
+        def cargar_opciones():
+            try:
+                with open('opciones_btns.json', 'r') as file:
+                    return json.load(file)
+            except FileNotFoundError:
+                return []
+            
+        top3=tk.Toplevel(top)
+        top3.geometry("260x150")
+        top3.title("Agregar Curso")
+        top3.config(bg="#fff")
+        tt=tk.Label(top3,text="Agregar un curso",font=("Times",21,"italic bold"),bg="#fff",fg="#3C5BBA")
+        tt.place(relx=0.5,rely=0.2,anchor="center")
+        entry1 = tk.Entry(top3, textvariable=var_entry1, font=("Times", 13), fg="#222", bg="#fff", bd=1, relief=tk.SOLID)
+        entry1.place(relx=0.019, rely=0.5, relwidth=0.95)
+        btnn=tk.Button(top3,text="Ingresar curso",bg="#3C5BBA",fg="#fff",font=("Helvetica",10,"bold"),pady=1,bd=2,relief="flat",activebackground="#fff",activeforeground="#3C5BBA", overrelief="solid",width=30,command=lambda:obtener_curso())
+        btnn.place(relx=0.5,rely=0.86,anchor="center")
+        
+        top3.mainloop()
+    opcion=[]
+    try:
+            with open('opciones_btns.json', 'r') as file:
+                opcion=json.load(file)
+    except FileNotFoundError:
+         return opcion
+    btn=tk.Button(new_frame,text="Agregar Curso",bd=1,relief="solid",bg="#fff",fg="#666a88",font=("Cambria",10,"bold"),padx=4,pady=1,command=lambda: ventana_entry(opcion))
+    btn.place(relx=0.52,rely=0.6,anchor="center")
+    
+    
+    combo = ttk.Combobox(new_frame, values=opcion, state="readonly")
+    combo.place(rely=0.6,relx=0.2,anchor="center")
+    # entry1 = tk.Entry(new_frame, textvariable=var_entry1, font=("Times", 13), fg="#222", bg="#fff", bd=1, relief=tk.SOLID)
+    # entry1.place(relx=0.015, rely=0.5, relwidth=0.95)
 
     #-----------------------------------------------#
 

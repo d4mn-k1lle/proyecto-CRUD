@@ -10,6 +10,7 @@ from ayudas import abrir_archivo
 from agregar import crear_agregar
 from modificar import crear_modificar
 from eliminar import crear_eliminar
+import json
 
 
 def actualizar_combobox ():
@@ -154,43 +155,6 @@ titulo_tabla.place(relx=0.5,rely=0.45,anchor=("center"))
 
 #---------------#
 
-# #creamos los 3 frames donde van a estar los 1ros,2dos y 3ros
-# frame_botones_sup2=tk.Frame(frame_cursos,width=795,height=50,bg="#fff")
-# frame_botones_sup3=tk.Frame(frame_cursos,width=795,height=50,bg="#fff")
-# frame_botones_sup=tk.Frame(frame_cursos,width=795,height=50,bg="#fff")
-
-# #---------------#
- 
-# # Añadir los frames a la ventana principal, uno sobre el otro(al superponerse se ocultan los demas)
-# for frame in (frame_botones_sup,frame_botones_sup2,frame_botones_sup3):
-#     frame.place(x=0, y=0, width=795, height=50)
-
-# #---------------#
-
-# #creamos los botones con las funciones del principio y con el lambda hacemos que solo se ejecuten si se presiona el boton
-# boton_4_4=crear_boton_curso(frame_botones_sup,"4º4",0.08,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 4º4","4-4"))#################################### me falta hacer que funcione
-# boton_4_6=crear_boton_curso(frame_botones_sup,"4º6",0.22,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 4º6","4-6"))
-# boton_5_4=crear_boton_curso(frame_botones_sup,"5º4",0.36,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 5º4","5-4"))
-# boton_5_5=crear_boton_curso(frame_botones_sup,"5º5",0.50,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 5º5","5-5"))
-# boton_6_3=crear_boton_curso(frame_botones_sup,"6º3",0.64,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 6º3","6-3"))
-# boton_6_4=crear_boton_curso(frame_botones_sup,"6º4",0.78,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 6º4","6-4"))
-# # boton_siguiente_2=crear_boton_cambio(frame_botones_sup,"-->",0.92,0.5,frame_botones_sup2)
-# #fin del primer frame
-# #---------------#
-# #inicio del segundo
-# # boton_volver_1=crear_boton_cambio(frame_botones_sup2,"<--",0.08,0.5,frame_botones_sup)
-# boton_7_3=crear_boton_curso(frame_botones_sup,"7º3",0.92,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Superior 7º3","7-3"))
-# boton_2d=crear_boton_curso(frame_botones_sup2,"2ºD",0.36,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 2ºD","2d"))
-# boton_3a=crear_boton_curso(frame_botones_sup2,"3ºA",0.50,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 3ºA","3a"))
-# boton_3b=crear_boton_curso(frame_botones_sup2,"3ºB",0.64,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 3ºB","3b"))
-# boton_3c=crear_boton_curso(frame_botones_sup2,"3ºC",0.78,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 3ºC","3c"))
-# boton_siguiente_3=crear_boton_cambio(frame_botones_sup2,"-->",0.92,0.5,frame_botones_sup3)
-#fin del segundo frame
-#---------------#
-#inicio del tercero, en un futuro se pueden crear muchos mas frames, es facil
-# boton_volver_2=crear_boton_cambio(frame_botones_sup3,"<--",0.08,0.5,frame_botones_sup2)
-# boton_3d=crear_boton_curso(frame_botones_sup3,"3ºD",0.22,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 3ºD","3d"))
-#fin del tercero
 
 frame_comboBox = tk.Frame(ventana,bg="#fff",width=40,height=40)
 frame_comboBox.pack(fill=tk.X, padx=0,pady=0)

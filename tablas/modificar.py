@@ -3,7 +3,7 @@ from ayudas import *
 from bd import crear_conexion,ejecutar_datos
 from tkinter import messagebox
 from tkcalendar import *
-from datetime import datetime
+from datetime import date,datetime
 
 def verificar_valor_en_lista(valor, lista):
     if valor in lista:
@@ -15,6 +15,7 @@ def crear_modificar(root,tree,lista_permitidos):
     top=tk.Toplevel(root)
     top.grab_set()
     top.resizable(False,False)
+    fecha_actual=date.today()
     
     def capitalizar_palabras(event,entry):
         # Obtener el texto actual del Entry
@@ -35,11 +36,46 @@ def crear_modificar(root,tree,lista_permitidos):
         vare4=var4.get()
         vare5=var5.get()
         vare6=var6.get()
+        
         if vare6=="":
             seleccionado = tree.selection()
             valores = tree.item(seleccionado, 'values')
             valor_definitivo=valores[5]
             vare6=valor_definitivo
+            
+         #si no esta bien echo
+        if not vare1:
+            label1.config(fg="#f00",text="Curso:*",font=("Times",14,"underline"))            
+        if not vare2:
+            label2.config(fg="#f00",text="Nombre/s:*",font=("Times",14,"underline"))
+        if not vare3:
+            label3.config(fg="#f00",text="Apellido/s:*",font=("Times",14,"underline"))
+        if not vare4:
+            boton_calendario.config(fg="#f00")
+        if not vare5:
+            label5.config(fg="#f00",text="DNI:*",font=("Times",14,"underline"))
+            pass
+        if not vare6:
+            label6.config(fg="#f00",text="Observaciones:*",font=("Times",14,"underline"))
+        
+        #si esta bien echo
+        if vare1:
+            label1.config(fg="#666a88",text="Curso:",font=("Times",14))            
+        if vare2:
+            label2.config(fg="#666a88",text="Nombre/s:",font=("Times",14))
+        if vare3:
+            label3.config(fg="#666a88",text="Apellido/s:",font=("Times",14))
+        if vare4:
+            boton_calendario.config(fg="#666a88")
+        if vare5:
+            label5.config(fg="#666a88",text="DNI:",font=("Times",14))
+        if vare6:
+            label6.config(fg="#666a88",text="Observaciones:",font=("Times",14))
+
+        #si alguno de todos esta mal no permite ingresar la consulta
+        if not vare6 or not vare5 or not vare4 or not vare3 or not vare2 or not vare1:
+            return
+        
         valor_1=vare1.capitalize()
         valor_2=vare2.title()
         valor_3=vare3.title()
@@ -51,7 +87,8 @@ def crear_modificar(root,tree,lista_permitidos):
             conexion.close() 
             top.destroy()
         else:
-            messagebox.showerror("Error","el primer dato es invalido")
+            label1.config(fg="#f00",text="Curso:*",font=("Times",14,"underline"))
+            return
     
 
 
@@ -197,10 +234,11 @@ def crear_modificar(root,tree,lista_permitidos):
     def calendario(var_entry4):
         def obtener_fecha(calendari,var_entry4):
             fecha_seleccionada=calendari.get_date()
+            boton_calendario.config(text=f"{fecha_seleccionada}")
             fecha_sin_barras = fecha_seleccionada.replace('/', '')
             var_entry4.set(fecha_sin_barras)
             top2.destroy()
-        
+            top.grab_set()
         fecha_inicial_remplazada=valorsito.replace('-','/')
         fecha_inicial=datetime.strptime(fecha_inicial_remplazada,"%d/%m/%Y")
         top2=tk.Toplevel(top)
@@ -208,10 +246,15 @@ def crear_modificar(root,tree,lista_permitidos):
         top2.config(bg="#fff")
         top2.resizable(False,False)
         top2.grab_set()
-        calendario = Calendar(top2, selectmode='day', date_pattern='dd/mm/yyyy', locale='es',background="#fff",foreground="#000",weekendbackground='#fff',othermonthbackground='#fff',daybackground="#fff",showweeknumbers=False,selectbackground="#eee",selectforeground="#000",bordercolor="#fff",headersbackground="#fff",othermonthwebackground="#fff",font=("cambria",11,"italic"),year=fecha_inicial.year,month=fecha_inicial.month,day=fecha_inicial.day)
+        calendario = Calendar(top2, selectmode='day', date_pattern='dd/mm/yyyy', locale='es',background="#fff",foreground="#000",weekendbackground='#fff',othermonthbackground='#fff',daybackground="#fff",showweeknumbers=False,selectbackground="#eee",selectforeground="#000",bordercolor="#fff",headersbackground="#fff",othermonthwebackground="#fff",font=("cambria",11,"italic"),year=fecha_inicial.year,month=fecha_inicial.month,day=fecha_inicial.day,maxdate=fecha_actual)
         calendario.pack(side="top")
-        botonsito=tk.Button(top2,text="Definir Fecha",bg="#3C5BBA",fg="#fff",font=("Helvetica",11,"bold"),pady=0,bd=2,relief="flat",activebackground="#fff",activeforeground="#3C5BBA", overrelief="solid",width=26,command=lambda:obtener_fecha(calendario,var_entry4))
+        botonsito=tk.Button(top2,text="Definir fecha",bg="#3C5BBA",fg="#fff",font=("Helvetica",11,"bold"),pady=0,bd=2,relief="flat",activebackground="#fff",activeforeground="#3C5BBA", overrelief="solid",width=26,command=lambda:obtener_fecha(calendario,var_entry4))
         botonsito.place(rely=0.88,relx=0.5,anchor="center")
+    
+    valor_boton=valorsito
+    valor_btn=valor_boton.replace("-","/")
+    boton_calendario.config(text=f"{valor_btn}")
+
     
 
 
