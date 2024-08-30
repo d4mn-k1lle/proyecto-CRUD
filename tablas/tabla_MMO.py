@@ -15,7 +15,7 @@ import json
 
 def actualizar_combobox ():
     conexion = crear_conexion()
-    consulta =f"select Curso from estudiantes;"
+    consulta =f"select Curso from MMO;"
     cursos=mostrar_tabla(conexion,consulta)
     
     if cursos:
@@ -27,11 +27,11 @@ def actualizar_combobox ():
 def course_changed(event):
     curso_seleccionado = selected_course.get()
     DosEnUno(titulo_tabla,"Ciclo superior " + curso_seleccionado,curso_seleccionado)
-    messagebox.showinfo("importante","curso seleccionado")
-
+    # messagebox.showinfo("importante","curso seleccionado")
+    print("curso seleccionado")
 
 def tablita(conexion,curso):
-    consulta=f"select * from estudiantes where curso='{curso}';"
+    consulta=f"select * from MMO where curso='{curso}';"
     data=mostrar_tabla(conexion,consulta)
     
     for item in arboledo.get_children():
@@ -187,12 +187,6 @@ frame_acciones=tk.Frame(ventana,width=795,height=60,bg="#fff")
 frame_acciones.pack(side="bottom")
 frame_acciones.pack_propagate(False)
 
-#---------------#
-
-boton_guardar=tk.Button(frame_acciones,text="Guardar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid")
-boton_guardar.place(relx=0.83,rely=0.5,anchor="center")
-
-#---------------#
 
 #el nombre arbol es para que no de error al ponerle tree que es el mismo nombre que un parametro
 arboledo=ttk.Treeview(ventana)
@@ -220,22 +214,26 @@ arboledo.heading("DNI",text="DNI",anchor=tk.CENTER)
 arboledo.heading("Obs",text="Observaciones",anchor=tk.CENTER)
 #---------------#
 #esto es provisional para saber cuanto ocupa y como queda con algunos datos
-arboledo.insert(parent='', index='end', id=0, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
-arboledo.insert(parent='', index='end', id=1, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
+arboledo.insert(parent='', index='end', id=1, text='', values=("--","--","--","AA-AA-AAAA",12345678,"observaciones generales"))
 
 
 #lista de valores permitidos para esta tabla
-lista_verificacion=["4-4","4-6","5-4","5-5","6-3","6-4","7-3"]
+lista_verificacion=[]
     
 #el boton de crear esta dsp, pq sino no me toma el arboledo ya que sino no existiria, en resumen, los 4 botones deben ir dsp del arboledo
-boton_nuevo=tk.Button(frame_acciones,text="agregar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_agregar(ventana,arboledo,lista_verificacion))#1751ED
+boton_nuevo=tk.Button(frame_acciones,text="agregar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_agregar(ventana,arboledo,lista_verificacion,"MMO","opciones_btns"))#1751ED
 boton_nuevo.place(relx=0.17,rely=0.5,anchor="center")
 
-boton_modificar=tk.Button(frame_acciones,text="Modificar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_modificar(ventana,arboledo,lista_verificacion))
+boton_modificar=tk.Button(frame_acciones,text="Modificar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_modificar(ventana,arboledo,lista_verificacion,"MMO","opciones_btns"))
 boton_modificar.place(relx=0.39,rely=0.5,anchor="center")
 
-boton_eliminar=tk.Button(frame_acciones,text="Eliminar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_eliminar(ventana,arboledo))
+boton_eliminar=tk.Button(frame_acciones,text="Eliminar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_eliminar(ventana,arboledo,"MMO","opciones_btns"))
 boton_eliminar.place(relx=0.61,rely=0.5,anchor="center")
+
+boton_guardar=tk.Button(frame_acciones,text="Observar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid")
+boton_guardar.place(relx=0.83,rely=0.5,anchor="center")
+
+
 
 
 

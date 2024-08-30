@@ -4,6 +4,8 @@ from bd import crear_conexion,ejecutar_datos
 from tkinter import messagebox
 from tkcalendar import *
 from datetime import date,datetime
+import json
+from tkinter import ttk
 
 def verificar_valor_en_lista(valor, lista):
     if valor in lista:
@@ -11,11 +13,16 @@ def verificar_valor_en_lista(valor, lista):
     else:
         print("Mal hecho")
         
-def crear_modificar(root,tree,lista_permitidos):
+def crear_modificar(root,tree,lista_permitidos,nombre_tabla,guardar_cursos):
     top=tk.Toplevel(root)
     top.grab_set()
     top.resizable(False,False)
     fecha_actual=date.today()
+    def verificacion(ventana,treeview):
+        seleccionado1=treeview.selection()
+        if not seleccionado1:
+            ventana.destroy()
+
     
     def capitalizar_palabras(event,entry):
         # Obtener el texto actual del Entry
@@ -30,7 +37,9 @@ def crear_modificar(root,tree,lista_permitidos):
     
     
     def obtener_valores(var1,var2,var3,var4,var5,var6):
+        curso=combo.get()
         vare1=var1.get()
+        vare1=curso
         vare2=var2.get()
         vare3=var3.get()
         vare4=var4.get()
@@ -50,11 +59,8 @@ def crear_modificar(root,tree,lista_permitidos):
             label2.config(fg="#f00",text="Nombre/s:*",font=("Times",14,"underline"))
         if not vare3:
             label3.config(fg="#f00",text="Apellido/s:*",font=("Times",14,"underline"))
-        if not vare4:
-            boton_calendario.config(fg="#f00")
         if not vare5:
             label5.config(fg="#f00",text="DNI:*",font=("Times",14,"underline"))
-            pass
         if not vare6:
             label6.config(fg="#f00",text="Observaciones:*",font=("Times",14,"underline"))
         
@@ -65,30 +71,29 @@ def crear_modificar(root,tree,lista_permitidos):
             label2.config(fg="#666a88",text="Nombre/s:",font=("Times",14))
         if vare3:
             label3.config(fg="#666a88",text="Apellido/s:",font=("Times",14))
-        if vare4:
-            boton_calendario.config(fg="#666a88")
         if vare5:
             label5.config(fg="#666a88",text="DNI:",font=("Times",14))
         if vare6:
             label6.config(fg="#666a88",text="Observaciones:",font=("Times",14))
 
         #si alguno de todos esta mal no permite ingresar la consulta
-        if not vare6 or not vare5 or not vare4 or not vare3 or not vare2 or not vare1:
+        if not vare6 or not vare5 or not vare3 or not vare2 or not vare1:
             return
-        
+        if not vare4:
+            seleccionado = tree.selection()
+            valores = tree.item(seleccionado, 'values')
+            valor_definitivo = valores[3]
+            valor_total=valor_definitivo.replace("-","")
+            vare4=valor_total
         valor_1=vare1.capitalize()
         valor_2=vare2.title()
         valor_3=vare3.title()
-        if valor_1 in lista_permitidos:
-            conexion=crear_conexion()
-            valoress=[valor_1,valor_2,valor_3,vare4,vare5,vare6]
-            insertar=f"UPDATE estudiantes SET curso='{valoress[0]}',nombres='{valoress[1]}', apellidos='{valoress[2]}',fecha_ingreso='{valoress[3]}',dni={valoress[4]},observaciones='{valoress[5]}' where dni={valoress[4]};"
-            ejecutar_datos(conexion,insertar)
-            conexion.close() 
-            top.destroy()
-        else:
-            label1.config(fg="#f00",text="Curso:*",font=("Times",14,"underline"))
-            return
+        conexion=crear_conexion()
+        valoress=[valor_1,valor_2,valor_3,vare4,vare5,vare6]
+        insertar=f"UPDATE {nombre_tabla} SET curso='{valoress[0]}',nombres='{valoress[1]}', apellidos='{valoress[2]}',fecha_ingreso='{vare4}',dni={valoress[4]},observaciones='{valoress[5]}' where dni={valoress[4]};"
+        ejecutar_datos(conexion,insertar)
+        conexion.close() 
+        top.destroy()
     
 
 
@@ -179,19 +184,90 @@ def crear_modificar(root,tree,lista_permitidos):
     
     
     #entry1-------------------------------------------------
-    new_frame=crear_frame_auxiliar(frame_inferior,60)
-    img = imagen(0)
+    new_frame=crear_frame_auxiliar(frame_inferior,60)#alto del frame
+    #el nuevo frame_aux
+    img = imagen(0)#num_img
     label_img=tk.Label(new_frame,image=img,bg="#fff")
-    label_img.image=img
-    label_img.place(relx=0.015,rely=0.0)
+    label_img.image=img#esta linea es inprescindible pq sino pierde la referencia y no anda la imagen
+    label_img.place(relx=0.015,rely=0.0)#ubicacionx,ubicaciony
 
-    label1=tk.Label(new_frame,text="Curso:",font=("Times",14),fg="#666a88",bg="#fff")
-    label1.place(relx=0.065,rely=0.0)
-    entry1 = tk.Entry(new_frame, textvariable=var_entry1, font=("Times", 13), fg="#222", bg="#fff", bd=1, relief=tk.SOLID)
-    entry1.place(relx=0.015, rely=0.5, relwidth=0.95)
-    valor_entry(tree,entry1,0)
+    label1=tk.Label(new_frame,text="Curso:",font=("Times",14),fg="#666a88",bg="#fff")#texto
+    label1.place(relx=0.065,rely=0.0)#ubi1,ubi2
+
+    def ventana_entry(opciones):
+        def guardar_opciones(opciones):
+            with open(f'{guardar_cursos}.json', 'w') as file:
+                json.dump(opciones, file)
+        def obtener_curso():
+            nueva_opcion=var_entry1.get()
+            opciones=cargar_opciones()
+            if nueva_opcion and nueva_opcion not in opciones:
+                opciones.append(nueva_opcion)
+                combo['values']=opciones
+                guardar_opciones(opciones=opciones)
+                entry1.delete(0,tk.END)
+                top3.destroy()
+                
+        def cargar_opciones():
+            try:
+                with open(f'{guardar_cursos}.json', 'r') as file:
+                    return json.load(file)
+            except FileNotFoundError:
+                return []
+            
+        top3=tk.Toplevel(top)
+        top3.geometry("260x150")
+        top3.title("Agregar Curso")
+        top3.config(bg="#fff")
+        tt=tk.Label(top3,text="Agregar un curso",font=("Times",21,"italic bold"),bg="#fff",fg="#3C5BBA")
+        tt.place(relx=0.5,rely=0.2,anchor="center")
+        entry1 = tk.Entry(top3, textvariable=var_entry1, font=("Times", 13), fg="#222", bg="#fff", bd=1, relief=tk.SOLID)
+        entry1.place(relx=0.019, rely=0.5, relwidth=0.95)
+        btnn=tk.Button(top3,text="Ingresar curso",bg="#3C5BBA",fg="#fff",font=("Helvetica",10,"bold"),pady=1,bd=2,relief="flat",activebackground="#fff",activeforeground="#3C5BBA", overrelief="solid",width=30,command=lambda:obtener_curso())
+        btnn.place(relx=0.5,rely=0.86,anchor="center")
+        
+        top3.mainloop()
+    opcion=[]
+    try:
+            with open('opciones_btns.json', 'r') as file:
+                opcion=json.load(file)
+    except FileNotFoundError:
+         return opcion
+     
+    def guardar_opciones2():
+        with open(f'{guardar_cursos}.json', 'w') as file:
+            json.dump(opcion, file)
+    def eliminar_opcion():
+        seleccion = combo.get()  # Obtener la opción seleccionada
+        confirmacion = messagebox.askyesno("Confirmación", f"¿Estás seguro de que deseas eliminar '{seleccion}'?")
+        if confirmacion:
+            if seleccion in opcion:
+                opcion.remove(seleccion)  # Eliminarla de la lista de opciones
+                combo['values'] = opcion  # Actualizar el Combobox
+                guardar_opciones2()  # Guardar la lista actualizada en el archivo .json
+                combo.set('')  # Limpiar la selección del Combobox
+            else:
+                return
+            combo.set('Ingrese un curso')
+        
+    btn=tk.Button(new_frame,text="Agregar Curso",bd=1,relief="solid",bg="#fff",fg="#666a88",font=("Cambria",10,"bold"),padx=4,pady=1,command=lambda: ventana_entry(opcion))
+    btn.place(relx=0.52,rely=0.6,anchor="center")
+    btn2=tk.Button(new_frame,text="Eliminar Curso",bd=1,relief="solid",bg="#fff",fg="#666a88",font=("Cambria",10,"bold"),padx=4,pady=1,command=lambda: eliminar_opcion())
+    btn2.place(relx=0.79,rely=0.6,anchor="center")
     
+    style=ttk.Style()
+    style.configure("TCombobox", font=("Times", 12))
     
+    combo = ttk.Combobox(new_frame, values=opcion, state="readonly",style="TCombobox")
+    seleccionado = tree.selection()
+    valores = tree.item(seleccionado, 'values')
+    if valores and len(valores) > 0:  # Verificar que 'valores' no esté vacío
+        valor_definitivo = valores[0]  # Asignar el primer valor de 'valores'
+        valor_definitivo=valores[0]
+        combo.set(f"{valor_definitivo}")
+        combo.place(rely=0.6,relx=0.2,anchor="center")
+    else:
+        return top.destroy()
     #entry2------------------------------------------------
     new_frame2=crear_frame_auxiliar(frame_inferior,60)
     validacion = new_frame2.register(solo_letras)

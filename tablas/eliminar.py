@@ -3,13 +3,15 @@ from ayudas import *
 from bd import crear_conexion,ejecutar_datos
 from tkinter import messagebox
 from tkcalendar import *
-from datetime import datetime
+from datetime import datetime,date
+import json
+from tkinter import ttk
 
-
-def crear_eliminar(root,tree):
+def crear_eliminar(root,tree,nombre_tabla,guardar_cursos):
     top=tk.Toplevel(root)
     top.grab_set()
     top.resizable(False,False)
+    fecha_actual=date.today()
     
     def obtener_valores(var1,var2,var3,var4,var5,var6):
         confirmacion=messagebox.askquestion("Confirmar","¿Esta seguro de borrar a este estudiante?")
@@ -25,7 +27,7 @@ def crear_eliminar(root,tree):
             if vare5 in valor_dni[4]:
                 valoress=[vare1,vare2,vare3,vare4,vare5,vare6] 
                 conexion=crear_conexion()
-                insertar=f"DELETE FROM estudiantes WHERE dni = {valoress[4]};"
+                insertar=f"DELETE FROM {nombre_tabla} WHERE dni = {valoress[4]} and nombres='{valoress[1]}' and apellidos='{valoress[2]}';"
                 ejecutar_datos(conexion,insertar)
                 conexion.close()
                 top.destroy()
@@ -137,17 +139,101 @@ def crear_eliminar(root,tree):
     
     
     #entry1-------------------------------------------------
-    new_frame=crear_frame_auxiliar(frame_inferior,60)
-    img = imagen(0)
+    new_frame=crear_frame_auxiliar(frame_inferior,60)#alto del frame
+    #el nuevo frame_aux
+    img = imagen(0)#num_img
     label_img=tk.Label(new_frame,image=img,bg="#fff")
-    label_img.image=img
-    label_img.place(relx=0.015,rely=0.0)
+    label_img.image=img#esta linea es inprescindible pq sino pierde la referencia y no anda la imagen
+    label_img.place(relx=0.015,rely=0.0)#ubicacionx,ubicaciony
 
-    label1=tk.Label(new_frame,text="Curso:",font=("Times",14),fg="#666a88",bg="#fff")
-    label1.place(relx=0.065,rely=0.0)
-    entry1 = tk.Entry(new_frame, textvariable=var_entry1, font=("Times", 13), fg="#222", bg="#fff", bd=1, relief=tk.SOLID,)
-    entry1.place(relx=0.015, rely=0.5, relwidth=0.95)
-    valor_entry(tree,entry1,0)
+    label1=tk.Label(new_frame,text="Curso:",font=("Times",14),fg="#666a88",bg="#fff")#texto
+    label1.place(relx=0.065,rely=0.0)#ubi1,ubi2
+
+    def ventana_entry(opciones):
+        def guardar_opciones(opciones):
+            with open(f'{guardar_cursos}.json', 'w') as file:
+                json.dump(opciones, file)
+        def obtener_curso():
+            nueva_opcion=var_entry1.get()
+            opciones=cargar_opciones()
+            if nueva_opcion and nueva_opcion not in opciones:
+                opciones.append(nueva_opcion)
+                combo['values']=opciones
+                guardar_opciones(opciones=opciones)
+                entry1.delete(0,tk.END)
+                top3.destroy()
+                
+        def cargar_opciones():
+            try:
+                with open(f'{guardar_cursos}.json', 'r') as file:
+                    return json.load(file)
+            except FileNotFoundError:
+                return []
+            
+        top3=tk.Toplevel(top)
+        top3.geometry("260x150")
+        top3.title("Agregar Curso")
+        top3.config(bg="#fff")
+        tt=tk.Label(top3,text="Agregar un curso",font=("Times",21,"italic bold"),bg="#fff",fg="#3C5BBA")
+        tt.place(relx=0.5,rely=0.2,anchor="center")
+        entry1 = tk.Entry(top3, textvariable=var_entry1, font=("Times", 13), fg="#222", bg="#fff", bd=1, relief=tk.SOLID)
+        entry1.place(relx=0.019, rely=0.5, relwidth=0.95)
+        btnn=tk.Button(top3,text="Ingresar curso",bg="#3C5BBA",fg="#fff",font=("Helvetica",10,"bold"),pady=1,bd=2,relief="flat",activebackground="#fff",activeforeground="#3C5BBA", overrelief="solid",width=30,command=lambda:obtener_curso())
+        btnn.place(relx=0.5,rely=0.86,anchor="center")
+        
+        top3.mainloop()
+    opcion=[]
+    try:
+            with open('opciones_btns.json', 'r') as file:
+                opcion=json.load(file)
+    except FileNotFoundError:
+         return opcion
+     
+    def guardar_opciones2():
+        with open(f'{guardar_cursos}.json', 'w') as file:
+            json.dump(opcion, file)
+    def eliminar_opcion():
+        seleccion = combo.get()  # Obtener la opción seleccionada
+        confirmacion = messagebox.askyesno("Confirmación", f"¿Estás seguro de que deseas eliminar '{seleccion}'?")
+        if confirmacion:
+            if seleccion in opcion:
+                opcion.remove(seleccion)  # Eliminarla de la lista de opciones
+                combo['values'] = opcion  # Actualizar el Combobox
+                guardar_opciones2()  # Guardar la lista actualizada en el archivo .json
+                combo.set('')  # Limpiar la selección del Combobox
+            else:
+                return
+            combo.set('Ingrese un curso')
+        
+    btn=tk.Button(new_frame,text="Agregar Curso\n(desactivado)",bd=1,relief="solid",bg="#fff",fg="#666a88",font=("Cambria",10,"bold"),padx=4,pady=1,command=lambda: ventana_entry(opcion),state="disabled")
+    btn.place(relx=0.52,rely=0.6,anchor="center")
+    btn2=tk.Button(new_frame,text="Eliminar Curso\n(desactivado)",bd=1,relief="solid",bg="#fff",fg="#666a88",font=("Cambria",10,"bold"),padx=4,pady=1,command=lambda: eliminar_opcion(),state="disabled")
+    btn2.place(relx=0.79,rely=0.6,anchor="center")
+    
+    style=ttk.Style()
+    style.configure("TCombobox", font=("Times", 12))
+    
+    combo = ttk.Combobox(new_frame, values=opcion, state="readonly",style="TCombobox")
+    seleccionado = tree.selection()
+    valores = tree.item(seleccionado, 'values')
+    if valores and len(valores) > 0:  # Verificar que 'valores' no esté vacío
+        valor_definitivo = valores[0]  # Asignar el primer valor de 'valores'
+        valor_definitivo=valores[0]
+        combo.set(f"{valor_definitivo}")
+        combo.place(rely=0.6,relx=0.2,anchor="center")
+    else:
+        return top.destroy()
+    # new_frame=crear_frame_auxiliar(frame_inferior,60)
+    # img = imagen(0)
+    # label_img=tk.Label(new_frame,image=img,bg="#fff")
+    # label_img.image=img
+    # label_img.place(relx=0.015,rely=0.0)
+
+    # label1=tk.Label(new_frame,text="Curso:",font=("Times",14),fg="#666a88",bg="#fff")
+    # label1.place(relx=0.065,rely=0.0)
+    # entry1 = tk.Entry(new_frame, textvariable=var_entry1, font=("Times", 13), fg="#222", bg="#fff", bd=1, relief=tk.SOLID,)
+    # entry1.place(relx=0.015, rely=0.5, relwidth=0.95)
+    # valor_entry(tree,entry1,0)
     
     
     #entry2------------------------------------------------
@@ -188,10 +274,11 @@ def crear_eliminar(root,tree):
     def calendario(var_entry4):
         def obtener_fecha(calendari,var_entry4):
             fecha_seleccionada=calendari.get_date()
+            boton_calendario.config(text=f"{fecha_seleccionada}")
             fecha_sin_barras = fecha_seleccionada.replace('/', '')
             var_entry4.set(fecha_sin_barras)
             top2.destroy()
-        
+            top.grab_set()
         fecha_inicial_remplazada=valorsito.replace('-','/')
         fecha_inicial=datetime.strptime(fecha_inicial_remplazada,"%d/%m/%Y")
         top2=tk.Toplevel(top)
@@ -199,11 +286,14 @@ def crear_eliminar(root,tree):
         top2.config(bg="#fff")
         top2.resizable(False,False)
         top2.grab_set()
-        calendario = Calendar(top2, selectmode='day', date_pattern='dd/mm/yyyy', locale='es',background="#fff",foreground="#000",weekendbackground='#fff',othermonthbackground='#fff',daybackground="#fff",showweeknumbers=False,selectbackground="#eee",selectforeground="#000",bordercolor="#fff",headersbackground="#fff",othermonthwebackground="#fff",font=("cambria",11,"italic"),year=fecha_inicial.year,month=fecha_inicial.month,day=fecha_inicial.day)
+        calendario = Calendar(top2, selectmode='day', date_pattern='dd/mm/yyyy', locale='es',background="#fff",foreground="#000",weekendbackground='#fff',othermonthbackground='#fff',daybackground="#fff",showweeknumbers=False,selectbackground="#eee",selectforeground="#000",bordercolor="#fff",headersbackground="#fff",othermonthwebackground="#fff",font=("cambria",11,"italic"),year=fecha_inicial.year,month=fecha_inicial.month,day=fecha_inicial.day,maxdate=fecha_actual)
         calendario.pack(side="top")
-        botonsito=tk.Button(top2,text="Definir Fecha",bg="#3C5BBA",fg="#fff",font=("Helvetica",11,"bold"),pady=0,bd=2,relief="flat",activebackground="#fff",activeforeground="#3C5BBA", overrelief="solid",width=26,command=lambda:obtener_fecha(calendario,var_entry4))
+        botonsito=tk.Button(top2,text="Definir fecha",bg="#3C5BBA",fg="#fff",font=("Helvetica",11,"bold"),pady=0,bd=2,relief="flat",activebackground="#fff",activeforeground="#3C5BBA", overrelief="solid",width=26,command=lambda:obtener_fecha(calendario,var_entry4))
         botonsito.place(rely=0.88,relx=0.5,anchor="center")
-
+    
+    valor_boton=valorsito
+    valor_btn=valor_boton.replace("-","/")
+    boton_calendario.config(text=f"{valor_btn}")
 
     #entry5------------------------------------------------
     new_frame5=crear_frame_auxiliar(frame_inferior,60)

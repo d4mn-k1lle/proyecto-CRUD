@@ -8,7 +8,7 @@ from datetime import date
 from tkinter import ttk
 
 
-def crear_agregar(root,tree,lista_permitidos):#6 entrys y el arbol, es para que al presionar el boton de Ingresar Estudiante obtenga los valores y los inserte(el boton esta al final del codigo)
+def crear_agregar(root,tree,lista_permitidos,nombre_tabla,guardar_cursos):#6 entrys y el arbol, es para que al presionar el boton de Ingresar Estudiante obtenga los valores y los inserte(el boton esta al final del codigo)
     
     fecha_actual=date.today()
     
@@ -31,7 +31,9 @@ def crear_agregar(root,tree,lista_permitidos):#6 entrys y el arbol, es para que 
     var_entry6=tk.StringVar()#Observaciones
     
     def obtener_valores(var1,var2,var3,var4,var5,var6):
+        curso=combo.get()
         vare1=var1.get()
+        vare1=curso
         vare2=var2.get()
         vare3=var3.get()
         vare4=var4.get()
@@ -74,15 +76,12 @@ def crear_agregar(root,tree,lista_permitidos):#6 entrys y el arbol, es para que 
             return
 
 
-        if valor_1 in lista_permitidos:
-            conexion=crear_conexion()
-            valoress=[valor_1,valor_2,valor_3,vare4,vare5,vare6] 
-            insertar=f"insert into estudiantes (curso,nombres,apellidos,fecha_ingreso,dni,observaciones)values('{valoress[0]}','{valoress[1]}','{valoress[2]}','{valoress[3]}',{valoress[4]},'{valoress[5]}');"
-            ejecutar_datos(conexion,insertar)
-            conexion.close()
-            top.destroy()
-        else:
-            messagebox.showerror("Error","el primer dato es invalido")
+        conexion=crear_conexion()
+        valoress=[valor_1,valor_2,valor_3,vare4,vare5,vare6] 
+        insertar=f"insert into {nombre_tabla} (curso,nombres,apellidos,fecha_ingreso,dni,observaciones)values('{valoress[0]}','{valoress[1]}','{valoress[2]}','{valoress[3]}',{valoress[4]},'{valoress[5]}');"
+        ejecutar_datos(conexion,insertar)
+        conexion.close()
+        top.destroy()
 
     def solo_letras(char):
     # Retorna True si el carácter es una letra, False de lo contrario
@@ -129,7 +128,7 @@ def crear_agregar(root,tree,lista_permitidos):#6 entrys y el arbol, es para que 
 
     def ventana_entry(opciones):
         def guardar_opciones(opciones):
-            with open('opciones_btns.json', 'w') as file:
+            with open(f'{guardar_cursos}.json', 'w') as file:
                 json.dump(opciones, file)
         def obtener_curso():
             nueva_opcion=var_entry1.get()
@@ -143,7 +142,7 @@ def crear_agregar(root,tree,lista_permitidos):#6 entrys y el arbol, es para que 
                 
         def cargar_opciones():
             try:
-                with open('opciones_btns.json', 'r') as file:
+                with open(f'{guardar_cursos}.json', 'r') as file:
                     return json.load(file)
             except FileNotFoundError:
                 return []
@@ -166,11 +165,33 @@ def crear_agregar(root,tree,lista_permitidos):#6 entrys y el arbol, es para que 
                 opcion=json.load(file)
     except FileNotFoundError:
          return opcion
+     
+    def guardar_opciones2():
+        with open(f'{guardar_cursos}.json', 'w') as file:
+            json.dump(opcion, file)
+    def eliminar_opcion():
+        seleccion = combo.get()  # Obtener la opción seleccionada
+        confirmacion = messagebox.askyesno("Confirmación", f"¿Estás seguro de que deseas eliminar '{seleccion}'?")
+        if confirmacion:
+            if seleccion in opcion:
+                opcion.remove(seleccion)  # Eliminarla de la lista de opciones
+                combo['values'] = opcion  # Actualizar el Combobox
+                guardar_opciones2()  # Guardar la lista actualizada en el archivo .json
+                combo.set('')  # Limpiar la selección del Combobox
+            else:
+                return
+            combo.set('Ingrese un curso')
+        
     btn=tk.Button(new_frame,text="Agregar Curso",bd=1,relief="solid",bg="#fff",fg="#666a88",font=("Cambria",10,"bold"),padx=4,pady=1,command=lambda: ventana_entry(opcion))
     btn.place(relx=0.52,rely=0.6,anchor="center")
+    btn2=tk.Button(new_frame,text="Eliminar Curso",bd=1,relief="solid",bg="#fff",fg="#666a88",font=("Cambria",10,"bold"),padx=4,pady=1,command=lambda: eliminar_opcion())
+    btn2.place(relx=0.79,rely=0.6,anchor="center")
     
+    style=ttk.Style()
+    style.configure("TCombobox", font=("Times", 12))
     
-    combo = ttk.Combobox(new_frame, values=opcion, state="readonly")
+    combo = ttk.Combobox(new_frame, values=opcion, state="readonly",style="TCombobox")
+    combo.set("Ingrese un curso")
     combo.place(rely=0.6,relx=0.2,anchor="center")
     # entry1 = tk.Entry(new_frame, textvariable=var_entry1, font=("Times", 13), fg="#222", bg="#fff", bd=1, relief=tk.SOLID)
     # entry1.place(relx=0.015, rely=0.5, relwidth=0.95)
