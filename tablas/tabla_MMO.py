@@ -14,7 +14,7 @@ from eliminar import crear_eliminar
 
 def actualizar_combobox ():
     conexion = crear_conexion()
-    consulta =f"select Curso from MMO;"
+    consulta ="select Curso from mmo;"
     cursos=mostrar_tabla(conexion,consulta)
     
     if cursos:
@@ -30,7 +30,7 @@ def course_changed(event):
     print("curso seleccionado")
 
 def tablita(conexion,curso):
-    consulta=f"select * from MMO where curso='{curso}';"
+    consulta=f"select * from mmo where curso='{curso}';"
     data=mostrar_tabla(conexion,consulta)
     
     for item in arboledo.get_children():

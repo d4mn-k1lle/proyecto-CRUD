@@ -31,7 +31,7 @@ def crear_agregar(root,tree,lista_permitidos,nombre_tabla,guardar_cursos):#6 ent
     var_entry6=tk.StringVar()#Observaciones
     
     def obtener_valores(var1,var2,var3,var4,var5,var6):
-        curso=combo.get()
+        curso=combo.get()          
         vare1=var1.get()
         vare1=curso
         vare2=var2.get()
@@ -43,9 +43,12 @@ def crear_agregar(root,tree,lista_permitidos,nombre_tabla,guardar_cursos):#6 ent
         valor_2=vare2.title()
         valor_3=vare3.title()
         
+        if not curso or curso=="Ingrese un curso":
+            label1.config(fg="#f00",text="Curso:*",font=("Times",14,"underline")) 
+        else:
+            label1.config(fg="#666a88",text="Curso:",font=("Times",14))  
+                       
         #si no esta bien echo
-        if not vare1:
-            label1.config(fg="#f00",text="Curso:*",font=("Times",14,"underline"))            
         if not vare2:
             label2.config(fg="#f00",text="Nombre/s:*",font=("Times",14,"underline"))
         if not vare3:
@@ -58,8 +61,8 @@ def crear_agregar(root,tree,lista_permitidos,nombre_tabla,guardar_cursos):#6 ent
             label6.config(fg="#f00",text="Observaciones:*",font=("Times",14,"underline"))
         
         #si esta bien echo
-        if vare1:
-            label1.config(fg="#666a88",text="Curso:",font=("Times",14))            
+        # if vare1:
+        #     label1.config(fg="#666a88",text="Curso:",font=("Times",14))            
         if vare2:
             label2.config(fg="#666a88",text="Nombre/s:",font=("Times",14))
         if vare3:
@@ -72,7 +75,7 @@ def crear_agregar(root,tree,lista_permitidos,nombre_tabla,guardar_cursos):#6 ent
             label6.config(fg="#666a88",text="Observaciones:",font=("Times",14))
 
         #si alguno de todos esta mal no permite ingresar la consulta
-        if not vare6 or not vare5 or not vare4 or not vare3 or not vare2 or not vare1:
+        if not vare6 or not vare5 or not vare4 or not vare3 or not vare2 or not vare1 or not curso or curso=="Ingrese un curso":
             return
 
 
@@ -161,8 +164,8 @@ def crear_agregar(root,tree,lista_permitidos,nombre_tabla,guardar_cursos):#6 ent
         top3.mainloop()
     opcion=[]
     try:
-            with open('opciones_btns.json', 'r') as file:
-                opcion=json.load(file)
+        with open(f'{guardar_cursos}.json', 'r') as file:
+            opcion=json.load(file)
     except FileNotFoundError:
          return opcion
      
@@ -187,10 +190,8 @@ def crear_agregar(root,tree,lista_permitidos,nombre_tabla,guardar_cursos):#6 ent
     btn2=tk.Button(new_frame,text="Eliminar Curso",bd=1,relief="solid",bg="#fff",fg="#666a88",font=("Cambria",10,"bold"),padx=4,pady=1,command=lambda: eliminar_opcion())
     btn2.place(relx=0.79,rely=0.6,anchor="center")
     
-    style=ttk.Style()
-    style.configure("TCombobox", font=("Times", 12))
     
-    combo = ttk.Combobox(new_frame, values=opcion, state="readonly",style="TCombobox")
+    combo = ttk.Combobox(new_frame, values=opcion, state="readonly")
     combo.set("Ingrese un curso")
     combo.place(rely=0.6,relx=0.2,anchor="center")
     # entry1 = tk.Entry(new_frame, textvariable=var_entry1, font=("Times", 13), fg="#222", bg="#fff", bd=1, relief=tk.SOLID)
@@ -237,7 +238,7 @@ def crear_agregar(root,tree,lista_permitidos,nombre_tabla,guardar_cursos):#6 ent
         def obtener_fecha(calendari,var_entry4):
             fecha_seleccionada=calendari.get_date()
             boton_calendario.config(text=f"{fecha_seleccionada}")
-            fecha_sin_barras = fecha_seleccionada.replace('/', '-')
+            fecha_sin_barras = fecha_seleccionada.replace('/', '')
             var_entry4.set(fecha_sin_barras)
             top2.destroy()
             top.grab_set()
