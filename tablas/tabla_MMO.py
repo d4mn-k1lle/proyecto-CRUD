@@ -10,7 +10,6 @@ from ayudas import abrir_archivo
 from agregar import crear_agregar
 from modificar import crear_modificar
 from eliminar import crear_eliminar
-import json
 
 
 def actualizar_combobox ():
@@ -221,13 +220,13 @@ arboledo.insert(parent='', index='end', id=1, text='', values=("--","--","--","A
 lista_verificacion=[]
     
 #el boton de crear esta dsp, pq sino no me toma el arboledo ya que sino no existiria, en resumen, los 4 botones deben ir dsp del arboledo
-boton_nuevo=tk.Button(frame_acciones,text="agregar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_agregar(ventana,arboledo,lista_verificacion,"MMO","opciones_btns"))#1751ED
+boton_nuevo=tk.Button(frame_acciones,text="agregar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_agregar(ventana,arboledo,lista_verificacion,"MMO","opciones_btns_mmo"))#1751ED
 boton_nuevo.place(relx=0.17,rely=0.5,anchor="center")
 
-boton_modificar=tk.Button(frame_acciones,text="Modificar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_modificar(ventana,arboledo,lista_verificacion,"MMO","opciones_btns"))
+boton_modificar=tk.Button(frame_acciones,text="Modificar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_modificar(ventana,arboledo,lista_verificacion,"MMO","opciones_btns_mmo"))
 boton_modificar.place(relx=0.39,rely=0.5,anchor="center")
 
-boton_eliminar=tk.Button(frame_acciones,text="Eliminar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_eliminar(ventana,arboledo,"MMO","opciones_btns"))
+boton_eliminar=tk.Button(frame_acciones,text="Eliminar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_eliminar(ventana,arboledo,"MMO","opciones_btns_mmo"))
 boton_eliminar.place(relx=0.61,rely=0.5,anchor="center")
 
 boton_guardar=tk.Button(frame_acciones,text="Observar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid")

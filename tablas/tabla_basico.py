@@ -1,6 +1,6 @@
-#interfaz grafica
 import tkinter as tk
 #arbol
+from tkinter import messagebox
 from tkinter import ttk
 from bd import mostrar_tabla,crear_conexion
 from PIL import Image,ImageTk
@@ -12,8 +12,25 @@ from modificar import crear_modificar
 from eliminar import crear_eliminar
 
 
+def actualizar_combobox ():
+    conexion = crear_conexion()
+    consulta =f"select Curso from basico;"
+    cursos=mostrar_tabla(conexion,consulta)
+    
+    if cursos:
+        course_cb['values'] = cursos
+    else:
+        messagebox.showwarning("ADVERTENCIA", "no encontraron cursos en la base de datos.")
+
+
+def course_changed(event):
+    curso_seleccionado = selected_course.get()
+    DosEnUno(titulo_tabla,"Ciclo basico " + curso_seleccionado,curso_seleccionado)
+    # messagebox.showinfo("importante","curso seleccionado")
+    print("curso seleccionado")
+
 def tablita(conexion,curso):
-    consulta=f"select * from estudiantes where curso='{curso}';"
+    consulta=f"select * from basico where curso='{curso}';"
     data=mostrar_tabla(conexion,consulta)
     
     for item in arboledo.get_children():
@@ -24,27 +41,12 @@ def tablita(conexion,curso):
         
     conexion.close()
     
-def mostrar_menu(event):
-    context_menu.post(event.x_root, event.y_root)
-
-def agregar_boton():
-    pass
-
-def cancelar_menu():
-    context_menu.unpost()
 
 #creamos la ventana principal
 ventana=tk.Tk()
 ventana.title("Tabla Ciclo Basico")
 ventana.geometry("960x560")
 ventana.resizable(False,False)
-
-#definimos menu para poder usar en los botones de arriba
-context_menu = tk.Menu(ventana, tearoff=0, bg="#fff", fg="#000", font=("Helvetica", 8,"bold italic"),bd=0,activebackground="#f0f0f0",activeforeground="#000")
-context_menu.add_command(label="Agregar botón", command=agregar_boton)
-context_menu.add_separator()
-context_menu.add_command(label="Cancelar", command=cancelar_menu)
-
 #es obligatoria ya que hace que se pueda superponer un frame sobre otro(botones de arriba 1a,1b,1c cunado pasas pagina se cambia a otro frame y asi la cantidad necesaria)
 def show_frame(frame):
     frame.tkraise()
@@ -66,7 +68,7 @@ def crear_boton_izq(frame,texto,relx,rely,estado,pady,ruta):
 def crear_boton_curso(frame, nombre, relx, rely,comando):
     boton = tk.Button(frame, text=nombre, width=10, height=1, bg="#4575F4", fg="#000", font=("Cambria", 10, "bold"), bd=2,relief="flat",activebackground="#4575F4",activeforeground="#111", overrelief="solid", pady=5,command=comando)#3C5BBA
     boton.place(relx=relx, rely=rely, anchor="center")
-    return boton
+    # return boton
 
 #para los botones de arriba de pasar de "pagina" osea los "-->,<--", la diferencia esta en el comando que en vez de elegirlo ya solo pones el frame al cual vas a mandar al frente
 def crear_boton_cambio(frame,nombre,relx,rely,frame_elegido):
@@ -134,7 +136,7 @@ boton_est_pase=crear_boton_izq(frame_botones_izq,"Exalumnos",0.12,0.8,"active",1
 #---------------#
 
 #creamos el frame superior(donde estan los botones de 1a,1b,1c)
-frame_cursos=tk.Frame(ventana,width=795,height=130,bg="#ccc")
+frame_cursos=tk.Frame(ventana,width=795,height=80,bg="#ccc")
 frame_cursos.pack(side="top")
 frame_cursos.pack_propagate(False)
 
@@ -147,51 +149,35 @@ frame_titulo_tabla.pack(side="bottom")
 #---------------#
 
 #creamos el titulo, que luego modificaremos dependiendo del boton
-titulo_tabla=tk.Label(frame_titulo_tabla,text="Ciclo Basico 1ºA",bg="#fff",fg="#111",font=("Cambria",40,"bold"))
+titulo_tabla=tk.Label(frame_titulo_tabla,text="Ciclo Basico",bg="#fff",fg="#111",font=("Cambria",40,"bold"))
 titulo_tabla.place(relx=0.5,rely=0.45,anchor=("center"))
 
 #---------------#
 
-#creamos los 3 frames donde van a estar los 1ros,2dos y 3ros
-frame_botones_sup2=tk.Frame(frame_cursos,width=795,height=50,bg="#fff")
-frame_botones_sup3=tk.Frame(frame_cursos,width=795,height=50,bg="#fff")
-frame_botones_sup=tk.Frame(frame_cursos,width=795,height=50,bg="#fff")
+frame_comboBox = tk.Frame(ventana,bg="#fff",width=40,height=40)
+frame_comboBox.pack(fill=tk.X, padx=0,pady=0)
 
-#---------------#
- 
-# Añadir los frames a la ventana principal, uno sobre el otro(al superponerse se ocultan los demas)
-for frame in (frame_botones_sup,frame_botones_sup2,frame_botones_sup3):
-    frame.place(x=0, y=0, width=795, height=50)
 
-#---------------#
 
-for frame in (frame_botones_sup,frame_botones_sup2,frame_botones_sup3):
-    frame.bind("<Button-3>", mostrar_menu)
 
-#creamos los botones con las funciones del principio y con el lambda hacemos que solo se ejecuten si se presiona el boton
-boton_1a=crear_boton_curso(frame_botones_sup,"1ºA",0.08,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 1ºA","1a"))
-boton_1b=crear_boton_curso(frame_botones_sup,"1ºB",0.22,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 1ºB","1b"))
-boton_1c=crear_boton_curso(frame_botones_sup,"1ºC",0.36,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 1ºC","1c"))
-boton_1d=crear_boton_curso(frame_botones_sup,"1ºD",0.50,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 1ºD","1d"))
-boton_2a=crear_boton_curso(frame_botones_sup,"2ºA",0.64,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 2ºA","2a"))
-boton_2b=crear_boton_curso(frame_botones_sup,"2ºB",0.78,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 2ºB","2b"))
-boton_siguiente_2=crear_boton_cambio(frame_botones_sup,"-->",0.92,0.5,frame_botones_sup2)
-#fin del primer frame
-#---------------#
-#inicio del segundo
-boton_volver_1=crear_boton_cambio(frame_botones_sup2,"<--",0.08,0.5,frame_botones_sup)
-boton_2c=crear_boton_curso(frame_botones_sup2,"2ºC",0.22,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 2ºC","2c"))
-boton_2d=crear_boton_curso(frame_botones_sup2,"2ºD",0.36,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 2ºD","2d"))
-boton_3a=crear_boton_curso(frame_botones_sup2,"3ºA",0.50,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 3ºA","3a"))
-boton_3b=crear_boton_curso(frame_botones_sup2,"3ºB",0.64,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 3ºB","3b"))
-boton_3c=crear_boton_curso(frame_botones_sup2,"3ºC",0.78,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 3ºC","3c"))
-boton_siguiente_3=crear_boton_cambio(frame_botones_sup2,"-->",0.92,0.5,frame_botones_sup3)
-#fin del segundo frame
-#---------------#
-#inicio del tercero, en un futuro se pueden crear muchos mas frames, es facil
-boton_volver_2=crear_boton_cambio(frame_botones_sup3,"<--",0.08,0.5,frame_botones_sup2)
-boton_3d=crear_boton_curso(frame_botones_sup3,"3ºD",0.22,0.5,lambda:DosEnUno(titulo_tabla,"Ciclo Basico 3ºD","3d"))
-#fin del tercero
+
+#crear el combobox
+selected_course = tk.StringVar()
+course_cb = ttk.Combobox(frame_comboBox, textvariable=selected_course,background="#fff")
+course_cb.set("Por favor seleccione una opcion")
+
+#Inicializar el combobox con cursos de la base de datos
+actualizar_combobox()
+
+#Evitar que se pueda escribir un valor
+course_cb ['state'] = 'readonly'
+course_cb ['background'] = '#fff'
+
+#ubicar el widget
+course_cb.pack(fill= tk.X, padx=5, pady=15)
+
+#asociar el evento de sleccion al comboBox
+course_cb.bind('<<ComboboxSelected>>',course_changed) 
 
 #---------------#
 
@@ -200,12 +186,6 @@ frame_acciones=tk.Frame(ventana,width=795,height=60,bg="#fff")
 frame_acciones.pack(side="bottom")
 frame_acciones.pack_propagate(False)
 
-#---------------#
-
-boton_guardar=tk.Button(frame_acciones,text="Guardar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid")
-boton_guardar.place(relx=0.83,rely=0.5,anchor="center")
-
-#---------------#
 
 #el nombre arbol es para que no de error al ponerle tree que es el mismo nombre que un parametro
 arboledo=ttk.Treeview(ventana)
@@ -233,21 +213,27 @@ arboledo.heading("DNI",text="DNI",anchor=tk.CENTER)
 arboledo.heading("Obs",text="Observaciones",anchor=tk.CENTER)
 #---------------#
 #esto es provisional para saber cuanto ocupa y como queda con algunos datos
-arboledo.insert(parent='', index='end', id=0, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
-arboledo.insert(parent='', index='end', id=1, text='', values=("5to","Matias","Gauto",2020,48384544,"qsy esto es un texto de prueba para ver como queda esta parte de la tabla"))
+arboledo.insert(parent='', index='end', id=1, text='', values=("--","--","--","AA-AA-AAAA",12345678,"observaciones generales"))
+
 
 #lista de valores permitidos para esta tabla
-lista_verificacion=["1a","1b","1c","1d","2a","2b","2c","2d","3a","3b","3c","3d"]
+lista_verificacion=[]
     
 #el boton de crear esta dsp, pq sino no me toma el arboledo ya que sino no existiria, en resumen, los 4 botones deben ir dsp del arboledo
-boton_nuevo=tk.Button(frame_acciones,text="Agregar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_agregar(ventana,arboledo,lista_verificacion))#1751ED
+boton_nuevo=tk.Button(frame_acciones,text="Agregar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_agregar(ventana,arboledo,lista_verificacion,"basico","opciones_btns_basico"))#1751ED
 boton_nuevo.place(relx=0.17,rely=0.5,anchor="center")
 
-boton_modificar=tk.Button(frame_acciones,text="Modificar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_modificar(ventana,arboledo,lista_verificacion))
+boton_modificar=tk.Button(frame_acciones,text="Modificar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_modificar(ventana,arboledo,lista_verificacion,"basico","opciones_btns_basico"))
 boton_modificar.place(relx=0.39,rely=0.5,anchor="center")
 
-boton_eliminar=tk.Button(frame_acciones,text="Eliminar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_eliminar(ventana,arboledo))
+boton_eliminar=tk.Button(frame_acciones,text="Eliminar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_eliminar(ventana,arboledo,"basico","opciones_btns_basico"))
 boton_eliminar.place(relx=0.61,rely=0.5,anchor="center")
+
+boton_guardar=tk.Button(frame_acciones,text="Observar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid")
+boton_guardar.place(relx=0.83,rely=0.5,anchor="center")
+
+
+
 
 
 #mostramos la ventana

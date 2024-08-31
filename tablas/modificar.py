@@ -83,8 +83,7 @@ def crear_modificar(root,tree,lista_permitidos,nombre_tabla,guardar_cursos):
             seleccionado = tree.selection()
             valores = tree.item(seleccionado, 'values')
             valor_definitivo = valores[3]
-            valor_total=valor_definitivo.replace("-","")
-            vare4=valor_total
+            vare4=valor_definitivo
         valor_1=vare1.capitalize()
         valor_2=vare2.title()
         valor_3=vare3.title()
@@ -311,7 +310,7 @@ def crear_modificar(root,tree,lista_permitidos,nombre_tabla,guardar_cursos):
         def obtener_fecha(calendari,var_entry4):
             fecha_seleccionada=calendari.get_date()
             boton_calendario.config(text=f"{fecha_seleccionada}")
-            fecha_sin_barras = fecha_seleccionada.replace('/', '')
+            fecha_sin_barras = fecha_seleccionada.replace('/', '-')
             var_entry4.set(fecha_sin_barras)
             top2.destroy()
             top.grab_set()

@@ -275,7 +275,7 @@ def crear_eliminar(root,tree,nombre_tabla,guardar_cursos):
         def obtener_fecha(calendari,var_entry4):
             fecha_seleccionada=calendari.get_date()
             boton_calendario.config(text=f"{fecha_seleccionada}")
-            fecha_sin_barras = fecha_seleccionada.replace('/', '')
+            fecha_sin_barras = fecha_seleccionada.replace('/', '-')
             var_entry4.set(fecha_sin_barras)
             top2.destroy()
             top.grab_set()
