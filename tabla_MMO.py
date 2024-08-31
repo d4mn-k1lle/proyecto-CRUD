@@ -25,12 +25,12 @@ def actualizar_combobox ():
 
 def course_changed(event):
     curso_seleccionado = selected_course.get()
-    DosEnUno(titulo_tabla,"Ciclo basico " + curso_seleccionado,curso_seleccionado)
+    DosEnUno(titulo_tabla,"Ciclo superior " + curso_seleccionado,curso_seleccionado)
     # messagebox.showinfo("importante","curso seleccionado")
     print("curso seleccionado")
 
 def tablita(conexion,curso):
-    consulta=f"select * from basico where curso='{curso}';"
+    consulta=f"select * from MMO where curso='{curso}';"
     data=mostrar_tabla(conexion,consulta)
     
     for item in arboledo.get_children():
@@ -40,23 +40,23 @@ def tablita(conexion,curso):
         arboledo.insert("", "end", values=row)
         
     conexion.close()
-    
+
 
 #creamos la ventana principal
 ventana=tk.Tk()
-ventana.title("Tabla Ciclo Basico")
+ventana.title("Tabla de Maestro Mayor en Obras")
 ventana.geometry("960x560")
 ventana.resizable(False,False)
 #es obligatoria ya que hace que se pueda superponer un frame sobre otro(botones de arriba 1a,1b,1c cunado pasas pagina se cambia a otro frame y asi la cantidad necesaria)
 def show_frame(frame):
     frame.tkraise()
-    
+
 #esto dsp va hacer que al ejecutar un boton de los de arriba no solo modifique el titulo sino tambien la tabla para que muestre solo lo de ese curso
 def DosEnUno(label,texto,curso):
     conexion=crear_conexion()
     label.config(text=texto)
     tablita(conexion,curso)
-    
+
 #funcion para crear los botones de la izquierda,(el estado es para que el boton de "superior no se pueda presionar ni interactue(deshabilitado)")
 def crear_boton_izq(frame,texto,relx,rely,estado,pady,ruta):
     boton=tk.Button(frame,text=texto,font=("Times",14,"bold"),width=10,height=1,bg="#fff",fg="#111",borderwidth=2,relief="flat",activebackground="#fff",activeforeground="#111", overrelief="solid",state=estado,disabledforeground="#111",pady=pady,command=lambda:abrir_archivo(ventana,ruta))
@@ -96,7 +96,7 @@ image_path = "login_intento-legible.8/imagenes/logo_escuela.png"
 image = Image.open(image_path)
 
 #-- le damos el tamaño y la achicamos con calidad con lanczos --#
-new_size = (93,100)  #
+new_size = (93,100)  
 resized_image = image.resize(new_size, Image.LANCZOS)
 photo = ImageTk.PhotoImage(resized_image)
 
@@ -149,17 +149,17 @@ frame_titulo_tabla.pack(side="bottom")
 #---------------#
 
 #creamos el titulo, que luego modificaremos dependiendo del boton
-titulo_tabla=tk.Label(frame_titulo_tabla,text="Ciclo Basico",bg="#fff",fg="#111",font=("Cambria",40,"bold"))
+titulo_tabla=tk.Label(frame_titulo_tabla,text="Superior MMO",bg="#fff",fg="#111",font=("Cambria",40,"bold"))
 titulo_tabla.place(relx=0.5,rely=0.45,anchor=("center"))
 
 #---------------#
 
+
 frame_comboBox = tk.Frame(ventana,bg="#fff",width=40,height=40)
 frame_comboBox.pack(fill=tk.X, padx=0,pady=0)
 
-
-
-
+# label = ttk.Label(frame_comboBox,text ="Porfavor seleccione un curso:",font=("Times",14), background="#fff" ,foreground="#4575F4")
+# label.place(relx=0.0,rely=0.0,anchor="center")
 
 #crear el combobox
 selected_course = tk.StringVar()
@@ -220,13 +220,13 @@ arboledo.insert(parent='', index='end', id=1, text='', values=("--","--","--","A
 lista_verificacion=[]
     
 #el boton de crear esta dsp, pq sino no me toma el arboledo ya que sino no existiria, en resumen, los 4 botones deben ir dsp del arboledo
-boton_nuevo=tk.Button(frame_acciones,text="Agregar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_agregar(ventana,arboledo,lista_verificacion,"basico","opciones_btns_basico"))#1751ED
+boton_nuevo=tk.Button(frame_acciones,text="agregar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_agregar(ventana,arboledo,lista_verificacion,"MMO","opciones_btns_mmo"))#1751ED
 boton_nuevo.place(relx=0.17,rely=0.5,anchor="center")
 
-boton_modificar=tk.Button(frame_acciones,text="Modificar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_modificar(ventana,arboledo,lista_verificacion,"basico","opciones_btns_basico"))
+boton_modificar=tk.Button(frame_acciones,text="Modificar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_modificar(ventana,arboledo,lista_verificacion,"MMO","opciones_btns_mmo"))
 boton_modificar.place(relx=0.39,rely=0.5,anchor="center")
 
-boton_eliminar=tk.Button(frame_acciones,text="Eliminar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_eliminar(ventana,arboledo,"basico","opciones_btns_basico"))
+boton_eliminar=tk.Button(frame_acciones,text="Eliminar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid",command=lambda:crear_eliminar(ventana,arboledo,"MMO","opciones_btns_mmo"))
 boton_eliminar.place(relx=0.61,rely=0.5,anchor="center")
 
 boton_guardar=tk.Button(frame_acciones,text="Observar",bg="#4575F4",fg="#111",relief="flat",width=10,pady=0,font=("Cambria",14,"bold"),borderwidth=2, overrelief="solid")
@@ -238,3 +238,4 @@ boton_guardar.place(relx=0.83,rely=0.5,anchor="center")
 
 #mostramos la ventana
 ventana.mainloop()
+
