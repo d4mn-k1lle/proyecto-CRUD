@@ -194,7 +194,7 @@ def crear_eliminar(root,tree,nombre_tabla,guardar_cursos):
             json.dump(opcion, file)
     def eliminar_opcion():
         seleccion = combo.get()  # Obtener la opción seleccionada
-        confirmacion = messagebox.askyesno("Confirmación", f"¿Estás seguro de que deseas eliminar '{seleccion}'?")
+        confirmacion = messagebox.askyesno("Confirmación", f"¿Estás seguro/a de que deseas eliminar '{seleccion}'?")
         if confirmacion:
             if seleccion in opcion:
                 opcion.remove(seleccion)  # Eliminarla de la lista de opciones

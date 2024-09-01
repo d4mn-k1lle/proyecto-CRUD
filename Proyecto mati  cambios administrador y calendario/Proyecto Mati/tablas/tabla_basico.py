@@ -54,7 +54,7 @@ def actualizar_combobox():
 
 def course_changed(event):
     curso_seleccionado = selected_course.get()
-    DosEnUno(titulo_tabla, "Ciclo basico " + curso_seleccionado, curso_seleccionado)
+    DosEnUno(titulo_tabla, "Ciclo Basico " + curso_seleccionado, curso_seleccionado)
     print("curso seleccionado")
 
 def tablita(conexion, curso):

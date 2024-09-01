@@ -11,7 +11,7 @@ def verificar_valor_en_lista(valor, lista):
     if valor in lista:
         print("Hola")
     else:
-        print("Mal hecho")
+        print("Mal hecho") # XD????
         
 def crear_modificar(root,tree,lista_permitidos,nombre_tabla,guardar_cursos):
     top=tk.Toplevel(root)

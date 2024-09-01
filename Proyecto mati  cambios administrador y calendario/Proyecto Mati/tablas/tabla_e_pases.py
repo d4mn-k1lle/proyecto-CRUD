@@ -135,7 +135,7 @@ frame_cursos.pack_propagate(False)
 frame_titulo_tabla = tk.Frame(frame_cursos, bg="#fff", width=795, height=80)
 frame_titulo_tabla.pack(side="bottom")
 
-titulo_tabla = tk.Label(frame_titulo_tabla, text="Estudiantes con pase", bg="#fff", fg="#111", font=("Cambria", 40, "bold"))
+titulo_tabla = tk.Label(frame_titulo_tabla, text="Estudiantes Con Pase", bg="#fff", fg="#111", font=("Cambria", 40, "bold"))
 titulo_tabla.place(relx=0.5, rely=0.45, anchor=("center"))
 
 frame_comboBox = tk.Frame(ventana, bg="#fff", width=40, height=40)

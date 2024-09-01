@@ -59,7 +59,7 @@ def pantalla_principal():
 
     #-- Se crea el label del curso y año --#
     CursoProgramacion = tk.Label(ventana,
-                                 text="5*3 Programación 2024",
+                                 text="5°3 2024",
                                  fg="#1d1d1d",
                                  bg="#B5BED6",
                                  font=("Times", 14, "italic bold"),
@@ -111,7 +111,7 @@ def pantalla_principal():
 
     #-- creamos los labels para cada integrante --#
     nombres_integrantes = [
-        "-Matias Gauto", "-Tiziano Cavallo", "-Belenger Hernandez", "-Aramis Lanas",
+        "-Matias Gauto", "-Tiziano Cavallo", "-Belenger Hernandez", "-Aramís Lanas",
         "-Miranda Lopez", "-Marien Persico", "-Matias Cardozo", "-Gonzalo Cardozo",
         "-Ian Aaron Celi"
     ]
